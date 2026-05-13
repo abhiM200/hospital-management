@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,42 +40,53 @@ public class AnalyticsController {
     public List<Map<String, Object>> getAppointmentsByDay() {
         LocalDate end = LocalDate.now();
         LocalDate start = end.minusDays(30);
-        
+
         Map<String, Long> counts = appointmentService.findAll().stream()
                 .filter(a -> {
                     LocalDate d = LocalDate.parse(a.getDate());
                     return !d.isBefore(start) && !d.isAfter(end);
                 })
                 .collect(Collectors.groupingBy(Appointment::getDate, Collectors.counting()));
-        
+
         return start.datesUntil(end.plusDays(1))
                 .map(d -> {
                     String ds = d.toString();
-                    return Map.of("date", ds, "count", counts.getOrDefault(ds, 0L));
+                    Map<String, Object> entry = new HashMap<>();
+                    entry.put("date", ds);
+                    entry.put("count", counts.getOrDefault(ds, 0L));
+                    return entry;
                 })
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/by-treatment")
     public List<Map<String, Object>> getByTreatment() {
-        // Since we don't have a treatment field in Appointment model yet, we'll infer from symptoms or just dummy data
-        // For a real app, you'd add a 'category' field to Appointment.
-        return List.of(
-            Map.of("label", "Skin", "value", 25),
-            Map.of("label", "Hormonal", "value", 15),
-            Map.of("label", "Migraine", "value", 20),
-            Map.of("label", "Pediatric", "value", 10),
-            Map.of("label", "Other", "value", 30)
-        );
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        String[] labels = {"Skin", "Hormonal", "Migraine", "Pediatric", "Other"};
+        int[] values = {25, 15, 20, 10, 30};
+
+        for (int i = 0; i < labels.length; i++) {
+            Map<String, Object> entry = new HashMap<>();
+            entry.put("label", labels[i]);
+            entry.put("value", values[i]);
+            result.add(entry);
+        }
+        return result;
     }
 
     @GetMapping("/by-type")
     public List<Map<String, Object>> getByType() {
         Map<String, Long> counts = appointmentService.findAll().stream()
                 .collect(Collectors.groupingBy(Appointment::getConsultationType, Collectors.counting()));
-        
-        return counts.entrySet().stream()
-                .map(e -> Map.of("label", e.getKey(), "value", e.getValue()))
-                .collect(Collectors.toList());
+
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Map.Entry<String, Long> e : counts.entrySet()) {
+            Map<String, Object> entry = new HashMap<>();
+            entry.put("label", e.getKey());
+            entry.put("value", e.getValue());
+            result.add(entry);
+        }
+        return result;
     }
 }

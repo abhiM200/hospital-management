@@ -15,7 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
@@ -146,7 +146,7 @@ public class PrescriptionController {
     private PdfPCell getCell(String text, Font font) {
         PdfPCell cell = new PdfPCell(new Phrase(text, font));
         cell.setPadding(5);
-        cell.setBorder(Rectangle.NO_BORDER);
+        cell.setBorder(com.lowagie.text.Rectangle.NO_BORDER);
         return cell;
     }
 
