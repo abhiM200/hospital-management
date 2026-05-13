@@ -3,7 +3,7 @@ services:
     name: dr-vandita-clinic
     env: docker
     plan: free
-    branch: master
+    branch: main
     dockerfilePath: ./Dockerfile
     healthCheckPath: /health
     envVars:
