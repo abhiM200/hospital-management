@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Vandita's Homeopathy Clinic | Gorakhpur</title>
+  <meta name="description" content="Expert Homeopathic treatment in Gorakhpur by Dr. Vandita, B.H.M.S. Book appointment online for chronic and acute conditions.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/hero.css">
+  <link rel="stylesheet" href="/css/cards.css">
+  <link rel="stylesheet" href="/css/booking.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-logo" data-route="/">
+        <div class="logo-icon heartbeat">🌿</div>
+        <span>Dr. Vandita's</span>
+      </a>
+      <div class="nav-links">
+        <a href="/" data-route="/">Home</a>
+        <a href="/about" data-route="/about">About</a>
+        <a href="/treatments" data-route="/treatments">Treatments</a>
+        <a href="/blog" data-route="/blog">Health Blog</a>
+        <a href="/contact" data-route="/contact">Contact</a>
+        <a href="/portal" class="btn-portal" data-route="/portal">Patient Portal</a>
+        <a href="/book" class="btn-book" data-route="/book">Book Now</a>
+      </div>
+      <button class="hamburger" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Page Content (SPA target) -->
+  <main id="app">
+    <div class="initial-loader">
+      <div class="spinner"></div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav for Mobile -->
+  <div id="bottom-nav">
+    <a href="/" data-route="/" class="active"><span class="icon">🏠</span><span>Home</span></a>
+    <a href="/treatments" data-route="/"><span class="icon">🌿</span><span>Treatments</span></a>
+    <a href="/book" data-route="/book"><span class="icon">📅</span><span>Book</span></a>
+    <a href="/portal" data-route="/portal"><span class="icon">👤</span><span>Portal</span></a>
+  </div>
+
+  <!-- Floating Buttons -->
+  <div class="floating-actions">
+    <button id="scroll-top" class="float-btn" title="Scroll to Top">↑</button>
+    <a href="https://wa.me/917005574327" target="_blank" class="float-btn whatsapp" title="Chat on WhatsApp">
+      <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M12.031 6.172c-2.335 0-4.241 1.906-4.241 4.241 0 .743.193 1.47.561 2.112l-.597 2.181 2.232-.586c.614.335 1.309.512 2.045.512 2.335 0 4.241-1.906 4.241-4.241 0-2.335-1.906-4.241-4.241-4.241zm2.529 6.026c-.104.262-.607.504-.836.535-.229.031-.512.042-1.488-.351-.976-.393-1.603-1.383-1.652-1.447-.049-.064-.403-.535-.403-1.021 0-.486.255-.724.346-.824.09-.1.198-.125.263-.125.066 0 .131.002.188.005.059.003.138-.022.215.164.077.186.264.644.288.694.024.05.04.108.007.174-.033.066-.049.108-.099.166-.05.058-.104.131-.148.175-.05.05-.102.105-.044.205.058.1.258.425.554.689.381.34 0 .381.381.657.433.07.13.111.164.077.262-.033.098-.148.246-.221.328-.074.082-.164.121-.06.225s.46 1.057 1.05 1.583c.59.526 1.088.75 1.252.82s.273.05.377-.066c.104-.116.444-.516.564-.694.12-.178.239-.148.403-.088.164.06.842.398.986.47s.239.108.274.168.035.342-.069.604zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.66 1.434 5.168L2 22l4.985-1.313C8.42 21.558 10.15 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.722 0-3.32-.472-4.685-1.288l-.336-.201-2.887.761.774-2.827-.221-.351C3.844 14.73 3.333 13.064 3.333 11.333c0-4.787 3.88-8.667 8.667-8.667s8.667 3.88 8.667 8.667-3.88 8.667-8.667 8.667z"/></svg>
+    </a>
+    <button id="chat-toggle" class="float-btn chat" title="Assistant">💬</button>
+  </div>
+
+  <!-- Chat Widget Panel -->
+  <div id="chat-panel" class="hidden">
+    <div class="chat-header">
+      <div class="chat-info">
+        <div class="chat-avatar">🌿</div>
+        <div>
+          <h4>Clinic Assistant</h4>
+          <p>Online</p>
+        </div>
+      </div>
+      <button id="chat-close">×</button>
+    </div>
+    <div id="chat-messages">
+      <div class="message bot">
+        Hello! I'm your clinic assistant. How can I help you today?
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chat-input-field" placeholder="Type a message...">
+      <button id="chat-send">Send</button>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- JS Files -->
+  <script src="/js/api.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/animations.js"></script>
+  <script src="/js/booking.js"></script>
+  <script src="/js/portal.js"></script>
+  <script src="/js/admin.js"></script>
+  <script src="/js/charts.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
