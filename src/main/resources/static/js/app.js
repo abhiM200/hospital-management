@@ -209,6 +209,82 @@ function renderHome() {
             </div>
         </section>
 
+        <!-- Our Experts -->
+        <section class="our-experts container">
+            <div class="section-title">
+                <span class="sub-heading">Doctors</span>
+                <h2>Our Consultants</h2>
+                <a href="/about" data-route="/about" class="btn-text">View All →</a>
+            </div>
+            <div class="experts-grid">
+                <div class="expert-card animate-on-scroll">
+                    <div class="expert-img" style="background-image: url('https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800')"></div>
+                    <div class="expert-info">
+                        <h4>Dr. Vandita Singh</h4>
+                        <p>B.H.M.S, Homeopathic Physician</p>
+                        <span class="expert-dept">SKIN & CHRONIC DISEASES</span>
+                        <a href="/book" data-route="/book" class="btn btn-outline btn-sm">Book Appointment</a>
+                    </div>
+                </div>
+                <!-- Placeholder for more doctors if needed -->
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials bg-light">
+            <div class="container">
+                <div class="section-title">
+                    <span class="sub-heading">Testimonials</span>
+                    <h2>What Our Patients Say</h2>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card animate-on-scroll">
+                        <div class="quote-icon">"</div>
+                        <p>Excellent treatment for my chronic migraine. Dr. Vandita is very patient and knowledgeable.</p>
+                        <div class="patient-info">
+                            <h5>Sangita Maity</h5>
+                            <span>Patient</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card animate-on-scroll">
+                        <div class="quote-icon">"</div>
+                        <p>Highly satisfied with the results for my skin condition. Natural and safe healing!</p>
+                        <div class="patient-info">
+                            <h5>Pritam Nag</h5>
+                            <span>Patient</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-card animate-on-scroll">
+                        <div class="quote-icon">"</div>
+                        <p>The best homeopathic clinic in Gorakhpur. Professional care and ethical practice.</p>
+                        <div class="patient-info">
+                            <h5>Sudarshan Samanta</h5>
+                            <span>Patient</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- International Patients -->
+        <section class="international-banner">
+            <div class="container international-grid">
+                <div class="international-text animate-on-scroll">
+                    <span class="sub-heading" style="color: white;">Global Care</span>
+                    <h2 style="color: white;">International Patient Services</h2>
+                    <p style="color: rgba(255,255,255,0.8);">Our international patient helpdesk ensures seamless healthcare with support in enquiries, appointments, and travel arrangements. Trust us for personalized assistance and the highest standard of care.</p>
+                    <div class="contact-box">
+                        <span>📞 +91 7005574327</span>
+                        <span>✉️ drvandita@clinic.in</span>
+                    </div>
+                    <a href="/contact" data-route="/contact" class="btn btn-accent mt-4">Know More</a>
+                </div>
+                <div class="international-image animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800" alt="International Patient" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                </div>
+            </div>
+        </section>
+
         <!-- Recent Blogs -->
         <section class="recent-blogs container">
             <div class="section-title">
