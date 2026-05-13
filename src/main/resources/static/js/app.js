@@ -40,7 +40,7 @@ async function loadPage(page, slug = null) {
     switch(page) {
         case 'home':
             app.innerHTML = renderHome();
-            if (typeof createParticles === 'function') createParticles();
+            populateHomeBlogs();
             break;
         case 'about':
             app.innerHTML = renderAbout();
@@ -76,57 +76,148 @@ async function loadPage(page, slug = null) {
     if (typeof initAnimations === 'function') initAnimations();
 }
 
+async function populateHomeBlogs() {
+    const grid = document.getElementById('home-blog-grid');
+    if (!grid) return;
+    try {
+        const posts = await API.get('/blog');
+        const recent = posts.slice(0, 3);
+        grid.innerHTML = recent.map(post => `
+            <div class="blog-card animate-on-scroll">
+                <div class="blog-img" style="background-image: url('${post.coverImageUrl}')"></div>
+                <div class="blog-info">
+                    <span class="blog-date">${post.createdAt}</span>
+                    <h3>${post.title}</h3>
+                    <p>${post.excerpt}</p>
+                    <a href="/blog/${post.slug}" data-route="/blog/${post.slug}" class="btn-text">Read More →</a>
+                </div>
+            </div>
+        `).join('');
+    } catch (e) {
+        grid.innerHTML = '<p>Error loading blogs.</p>';
+    }
+}
+
 function renderHome() {
     return `
-        <section class="hero">
-            <div class="hero-content animate-on-scroll">
-                <h1 class="dm-serif">Holistic Healing for a <span class="text-accent">Better Life</span></h1>
-                <p>Experience the power of classical homeopathy with Dr. Vandita. Personalized care for your long-term well-being.</p>
-                <div class="hero-btns">
-                    <a href="/book" data-route="/book" class="btn btn-accent">Book Appointment</a>
-                    <a href="/treatments" data-route="/treatments" class="btn btn-outline">Our Treatments</a>
-                </div>
-            </div>
-            <div class="hero-image animate-on-scroll">
-                <div class="glass-card main-hero-card">
-                    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800" alt="Homeopathy">
+        <!-- Hero Section -->
+        <section class="hero-peerless">
+            <div class="hero-slide active">
+                <div class="container hero-container">
+                    <div class="hero-text animate-on-scroll">
+                        <span class="hero-badge">32 Years of Healing</span>
+                        <h1>A Legacy of <span class="text-accent">Healing</span>, Hope and Health</h1>
+                        <p>At the heart of our legacy lies a commitment to your well-being, spanning over a decade of exceptional homeopathic care.</p>
+                        <div class="hero-actions">
+                            <a href="/book" data-route="/book" class="btn btn-primary">Book Online</a>
+                            <a href="/about" data-route="/about" class="btn btn-outline">Know More</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual animate-on-scroll">
+                        <div class="hero-image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1631217818242-27497080803c?w=1000&auto=format" alt="Medical Care">
+                            <div class="hero-stats-card">
+                                <h3>5000+</h3>
+                                <p>Patients Treated</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="stats container animate-on-scroll">
-            <div class="stat-item">
-                <h2 class="stat-number">10+</h2>
-                <p>Years Experience</p>
+        <!-- Quick Links / Simple Process -->
+        <section class="quick-links container">
+            <div class="section-title">
+                <span class="sub-heading">Simple Process</span>
+                <h2>Helping You Stay Strong</h2>
             </div>
-            <div class="stat-item">
-                <h2 class="stat-number">5000+</h2>
-                <p>Happy Patients</p>
-            </div>
-            <div class="stat-item">
-                <h2 class="stat-number">98%</h2>
-                <p>Success Rate</p>
+            <div class="quick-links-grid">
+                <a href="/book" data-route="/book" class="quick-link-card animate-on-scroll">
+                    <div class="card-icon">📅</div>
+                    <h4>Online Appointment</h4>
+                    <p>Access healthcare easily with our online booking.</p>
+                </a>
+                <a href="https://wa.me/917005574327" class="quick-link-card animate-on-scroll">
+                    <div class="card-icon">📞</div>
+                    <h4>Teleconsultation</h4>
+                    <p>Consult securely with our healthcare experts online.</p>
+                </a>
+                <a href="/portal" data-route="/portal" class="quick-link-card animate-on-scroll">
+                    <div class="card-icon">📄</div>
+                    <h4>Reports Download</h4>
+                    <p>Get your investigation reports with just one click.</p>
+                </a>
+                <a href="/contact" data-route="/contact" class="quick-link-card animate-on-scroll">
+                    <div class="card-icon">❓</div>
+                    <h4>Enquiry</h4>
+                    <p>Simplify healthcare with easy enquiry options.</p>
+                </a>
             </div>
         </section>
 
-        <section class="features container">
-            <h2 class="section-title">Why Choose Us?</h2>
-            <div class="features-grid">
-                <div class="glass-card feature-card animate-on-scroll">
-                    <div class="feature-icon">🌿</div>
-                    <h3>Natural Healing</h3>
-                    <p>Safe, side-effect free treatments that stimulate your body's own healing powers.</p>
+        <!-- About Summary -->
+        <section class="about-summary bg-white">
+            <div class="container about-summary-grid">
+                <div class="about-summary-image animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800" alt="Dr. Vandita">
                 </div>
-                <div class="glass-card feature-card animate-on-scroll">
-                    <div class="feature-icon">🔍</div>
-                    <h3>Root Cause Analysis</h3>
-                    <p>We don't just treat symptoms; we address the underlying cause of your illness.</p>
+                <div class="about-summary-text animate-on-scroll">
+                    <span class="sub-heading">Why Choose Us</span>
+                    <h2>A Multi-Specialty Homeopathy Clinic</h2>
+                    <p>Dr. Vandita's Homeopathy Clinic is built around the core principle of selfless, single-minded, and sustainable service with ethical practice. Having a pioneering status in the healthcare domain in Gorakhpur.</p>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <span class="icon">✅</span>
+                            <div>
+                                <h4>Expert Doctors</h4>
+                                <p>Highly qualified B.H.M.S practitioners with years of experience.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="icon">✅</span>
+                            <div>
+                                <h4>24/7 Support</h4>
+                                <p>Emergency consultation and support available via WhatsApp.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/about" data-route="/about" class="btn btn-primary mt-4">Read More</a>
                 </div>
-                <div class="glass-card feature-card animate-on-scroll">
-                    <div class="feature-icon">🤝</div>
-                    <h3>Personalized Care</h3>
-                    <p>Every patient is unique. We provide tailored remedies based on your specific profile.</p>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-peerless">
+            <div class="container stats-grid">
+                <div class="stat-box animate-on-scroll">
+                    <h2 class="stat-number">10+</h2>
+                    <p>Years Experience</p>
                 </div>
+                <div class="stat-box animate-on-scroll">
+                    <h2 class="stat-number">5000+</h2>
+                    <p>Happy Patients</p>
+                </div>
+                <div class="stat-box animate-on-scroll">
+                    <h2 class="stat-number">98%</h2>
+                    <p>Success Rate</p>
+                </div>
+                <div class="stat-box animate-on-scroll">
+                    <h2 class="stat-number">24/7</h2>
+                    <p>Emergency Care</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Blogs -->
+        <section class="recent-blogs container">
+            <div class="section-title">
+                <span class="sub-heading">Health Blog</span>
+                <h2>Keeping You Well</h2>
+                <a href="/blog" data-route="/blog" class="btn-text">View All Blogs →</a>
+            </div>
+            <div id="home-blog-grid" class="blog-grid-peerless">
+                <div class="loader">Loading...</div>
             </div>
         </section>
     `;
@@ -134,16 +225,21 @@ function renderHome() {
 
 function renderAbout() {
     return `
+        <section class="hero-peerless hero-small">
+            <div class="container">
+                <span class="sub-heading">About Us</span>
+                <h1>A Legacy of Trust & Healing</h1>
+            </div>
+        </section>
         <div class="container page-margin">
-            <h1 class="dm-serif section-title">About Dr. Vandita</h1>
-            <div class="about-grid">
-                <div class="about-text glass-card">
-                    <p>Dr. Vandita is a highly qualified B.H.M.S Homeopathic Physician with over a decade of experience in providing holistic healthcare.</p>
-                    <p>Her journey in homeopathy started with a passion for natural medicine and a belief that the human body has an innate ability to heal itself when given the right stimulus.</p>
+            <div class="about-summary-grid">
+                <div class="about-summary-text">
+                    <p>Dr. Vandita is a highly qualified B.H.M.S Homeopathic Physician with over a decade of experience in providing holistic healthcare. Her journey in homeopathy started with a passion for natural medicine and a belief that the human body has an innate ability to heal itself when given the right stimulus.</p>
                     <p>Specializing in chronic conditions like PCOD, Thyroid, Skin diseases, and Migraine, she has successfully treated thousands of patients from all walks of life.</p>
+                    <p>Our clinic is dedicated to providing personalized care, focusing on the root cause of ailments rather than just suppressing symptoms. We use high-quality homeopathic remedies and modern diagnostic insights to ensure the best outcomes for our patients.</p>
                 </div>
-                <div class="about-image glass-card">
-                     <img src="https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800" alt="Doctor">
+                <div class="about-summary-image">
+                     <img src="https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800" alt="Doctor" style="border-radius: 20px;">
                 </div>
             </div>
         </div>
@@ -152,15 +248,20 @@ function renderAbout() {
 
 function renderTreatments() {
     return `
+        <section class="hero-peerless hero-small">
+            <div class="container">
+                <span class="sub-heading">Our Services</span>
+                <h1>Departments & Specialties</h1>
+            </div>
+        </section>
         <div class="container page-margin">
-            <h1 class="dm-serif section-title">Treatments</h1>
-            <div class="features-grid">
-                <div class="glass-card feature-card"><h3>Skin Conditions</h3><p>Eczema, Psoriasis, Acne, Warts</p></div>
-                <div class="glass-card feature-card"><h3>Hormonal Balance</h3><p>PCOD, Thyroid, Menstrual issues</p></div>
-                <div class="glass-card feature-card"><h3>Respiratory</h3><p>Asthma, Sinusitis, Allergic Rhinitis</p></div>
-                <div class="glass-card feature-card"><h3>Digestive Health</h3><p>IBS, Gastritis, Acid Reflux</p></div>
-                <div class="glass-card feature-card"><h3>Mental Well-being</h3><p>Anxiety, Stress, Insomnia</p></div>
-                <div class="glass-card feature-card"><h3>Pediatrics</h3><p>Recurrent colds, Tonsillitis, Bedwetting</p></div>
+            <div class="quick-links-grid">
+                <div class="quick-link-card"><h3>Skin Conditions</h3><p>Eczema, Psoriasis, Acne, Warts</p></div>
+                <div class="quick-link-card"><h3>Hormonal Balance</h3><p>PCOD, Thyroid, Menstrual issues</p></div>
+                <div class="quick-link-card"><h3>Respiratory</h3><p>Asthma, Sinusitis, Allergic Rhinitis</p></div>
+                <div class="quick-link-card"><h3>Digestive Health</h3><p>IBS, Gastritis, Acid Reflux</p></div>
+                <div class="quick-link-card"><h3>Mental Well-being</h3><p>Anxiety, Stress, Insomnia</p></div>
+                <div class="quick-link-card"><h3>Pediatrics</h3><p>Recurrent colds, Tonsillitis, Bedwetting</p></div>
             </div>
         </div>
     `;
@@ -324,23 +425,28 @@ async function renderBlogPost(app, slug) {
 
 function renderContact() {
     return `
+        <section class="hero-peerless hero-small">
+            <div class="container">
+                <span class="sub-heading">Connect With Us</span>
+                <h1>Contact Our Clinic</h1>
+            </div>
+        </section>
         <div class="container page-margin">
-            <h1 class="dm-serif section-title">Contact Us</h1>
-            <div class="about-grid">
-                <div class="glass-card">
+            <div class="about-summary-grid">
+                <div class="quick-link-card">
                     <h3>Get in Touch</h3>
                     <p><strong>Address:</strong> Padri Bazar, Mohanapur, Gorakhpur, UP</p>
                     <p><strong>Phone:</strong> +91 7005574327</p>
                     <p><strong>Email:</strong> drvandita@clinic.in</p>
                     <p><strong>Working Hours:</strong> Mon-Sat (9AM-1PM, 4PM-8PM)</p>
                 </div>
-                <div class="glass-card">
+                <div class="quick-link-card" style="text-align: left;">
                     <h3>Send a Message</h3>
                     <form onsubmit="event.preventDefault(); toast('Message sent! We will contact you soon.')">
-                        <div class="form-group"><input type="text" placeholder="Name" required class="full-width"></div>
-                        <div class="form-group mt-2"><input type="email" placeholder="Email" required class="full-width"></div>
-                        <div class="form-group mt-2"><textarea placeholder="Message" required class="full-width" rows="4"></textarea></div>
-                        <button class="btn btn-accent mt-2">Send Message</button>
+                        <div class="form-group"><input type="text" placeholder="Name" required class="full-width" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid var(--border); border-radius: 5px;"></div>
+                        <div class="form-group mt-2"><input type="email" placeholder="Email" required class="full-width" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid var(--border); border-radius: 5px;"></div>
+                        <div class="form-group mt-2"><textarea placeholder="Message" required class="full-width" rows="4" style="width: 100%; padding: 10px; margin-top: 10px; border: 1px solid var(--border); border-radius: 5px;"></textarea></div>
+                        <button class="btn btn-primary mt-4">Send Message</button>
                     </form>
                 </div>
             </div>

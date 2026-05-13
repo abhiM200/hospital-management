@@ -9,7 +9,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
   <!-- CSS Files -->
   <link rel="stylesheet" href="/css/main.css">
@@ -25,21 +25,45 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+  <!-- Top Bar -->
+  <div id="top-bar">
+    <div class="container top-bar-content">
+      <div class="top-info">
+        <a href="tel:+917005574327" class="info-item">📞 +91 7005574327</a>
+        <a href="mailto:drvandita@clinic.in" class="info-item">✉️ drvandita@clinic.in</a>
+      </div>
+      <div class="top-actions">
+        <a href="/book" data-route="/book" class="btn-top">Emergency: +91 7005574327</a>
+        <div class="location-selector">
+          <span>📍 Padri Bazar, Gorakhpur</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Navbar -->
   <nav id="navbar">
     <div class="nav-container">
       <a href="/" class="nav-logo" data-route="/">
         <div class="logo-icon heartbeat">🌿</div>
-        <span>Dr. Vandita's</span>
+        <div class="logo-text">
+          <span class="main-title">Dr. Vandita's</span>
+          <span class="sub-title">Homeopathy Clinic</span>
+        </div>
       </a>
       <div class="nav-links">
-        <a href="/" data-route="/">Home</a>
-        <a href="/about" data-route="/about">About</a>
-        <a href="/treatments" data-route="/treatments">Treatments</a>
-        <a href="/blog" data-route="/blog">Health Blog</a>
-        <a href="/contact" data-route="/contact">Contact</a>
+        <div class="nav-dropdown">
+          <a href="/about" data-route="/about">About Us</a>
+        </div>
+        <div class="nav-dropdown">
+          <a href="/treatments" data-route="/treatments">Treatments</a>
+        </div>
+        <div class="nav-dropdown">
+          <a href="/blog" data-route="/blog">Health Blog</a>
+        </div>
+        <a href="/contact" data-route="/contact">Contact Us</a>
         <a href="/portal" class="btn-portal" data-route="/portal">Patient Portal</a>
-        <a href="/book" class="btn-book" data-route="/book">Book Now</a>
+        <a href="/book" class="btn-book" data-route="/book">Book Appointment</a>
       </div>
       <button class="hamburger" id="menu-toggle">
         <span></span>
@@ -56,10 +80,52 @@
     </div>
   </main>
 
+  <!-- Footer -->
+  <footer id="main-footer">
+    <div class="container footer-grid">
+      <div class="footer-col about">
+        <div class="footer-logo">🌿 Dr. Vandita's</div>
+        <p>Providing 10+ years of healing through classical homeopathy. Our mission is to provide safe, natural, and permanent cures for chronic diseases.</p>
+        <div class="social-links">
+          <a href="#">FB</a><a href="#">TW</a><a href="#">IG</a><a href="#">YT</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Patient Info</h4>
+        <ul>
+          <li><a href="/book" data-route="/book">Find a Doctor</a></li>
+          <li><a href="/portal" data-route="/portal">Patient Records</a></li>
+          <li><a href="/contact" data-route="/contact">Enquiry</a></li>
+          <li><a href="/contact" data-route="/contact">Feedback</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Other Links</h4>
+        <ul>
+          <li><a href="/about" data-route="/about">About Us</a></li>
+          <li><a href="/blog" data-route="/blog">Recent Blogs</a></li>
+          <li><a href="/contact" data-route="/contact">Career</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col contact">
+        <h4>Connect</h4>
+        <p>📞 +91 7005574327</p>
+        <p>✉️ drvandita@clinic.in</p>
+        <p>📍 Padri Bazar, Mohanapur, Gorakhpur, UP</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>Copyright © 2026 Dr. Vandita's Homeopathy Clinic. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
   <!-- Bottom Nav for Mobile -->
   <div id="bottom-nav">
     <a href="/" data-route="/" class="active"><span class="icon">🏠</span><span>Home</span></a>
-    <a href="/treatments" data-route="/"><span class="icon">🌿</span><span>Treatments</span></a>
+    <a href="/treatments" data-route="/treatments"><span class="icon">🌿</span><span>Treats</span></a>
     <a href="/book" data-route="/book"><span class="icon">📅</span><span>Book</span></a>
     <a href="/portal" data-route="/portal"><span class="icon">👤</span><span>Portal</span></a>
   </div>
