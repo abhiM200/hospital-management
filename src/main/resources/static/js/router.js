@@ -23,7 +23,19 @@ function navigate(path, pushState = true) {
   
   const handler = getRouteHandler(path);
   document.getElementById('app').innerHTML = '<div class="initial-loader"><div class="spinner"></div></div>';
-  handler();
+  
+  try {
+    if (typeof handler === 'function') {
+      handler();
+    } else {
+      console.error('No handler found for route:', path);
+      loadPage('home');
+    }
+  } catch (e) {
+    console.error('Navigation Error:', e);
+    document.getElementById('app').innerHTML = '<div class="container"><h1>Something went wrong</h1><p>Please refresh the page.</p></div>';
+  }
+  
   window.scrollTo(0, 0);
   
   // Update active links

@@ -65,5 +65,31 @@ const Charts = {
         scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
       }
     });
+  },
+
+  radar(id, data, labels) {
+    const ctx = document.getElementById(id);
+    if (!ctx) return;
+    return new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Health Metrics',
+          data: data,
+          backgroundColor: 'rgba(0, 75, 145, 0.2)',
+          borderColor: '#004B91',
+          pointBackgroundColor: '#F77F00',
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          r: { beginAtZero: true, max: 100 }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
   }
 };

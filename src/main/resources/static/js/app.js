@@ -117,31 +117,6 @@ async function populateHomeBlogs() {
     }
 }
 
-const Charts = {
-    radar(id, data, labels) {
-        const ctx = document.getElementById(id);
-        if (!ctx) return;
-        new Chart(ctx, {
-            type: 'radar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Health Metrics',
-                    data: data,
-                    backgroundColor: 'rgba(0, 75, 145, 0.2)',
-                    borderColor: 'var(--primary)',
-                    pointBackgroundColor: 'var(--accent)',
-                }]
-            },
-            options: {
-                scales: {
-                    r: { beginAtZero: true, max: 100 }
-                },
-                plugins: { legend: { display: false } }
-            }
-        });
-    }
-};
 
 function renderHome() {
     return `
