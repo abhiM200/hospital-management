@@ -1,0 +1,13 @@
+target/
+.idea/
+.vscode/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+.DS_Store
+node_modules/
+.next/
+out/
+build/

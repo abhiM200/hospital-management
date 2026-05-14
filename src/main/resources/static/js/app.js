@@ -65,6 +65,10 @@ async function loadPage(page, slug = null) {
         case 'blog-post':
             await renderBlogPost(app, slug);
             break;
+        case 'ai-suite':
+            app.innerHTML = renderAISuite();
+            if (window.AISuite) window.AISuite.init();
+            break;
         case 'contact':
             app.innerHTML = renderContact();
             break;
@@ -98,27 +102,66 @@ async function populateHomeBlogs() {
     }
 }
 
+const Charts = {
+    radar(id, data, labels) {
+        const ctx = document.getElementById(id);
+        if (!ctx) return;
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Health Metrics',
+                    data: data,
+                    backgroundColor: 'rgba(0, 75, 145, 0.2)',
+                    borderColor: 'var(--primary)',
+                    pointBackgroundColor: 'var(--accent)',
+                }]
+            },
+            options: {
+                scales: {
+                    r: { beginAtZero: true, max: 100 }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+    }
+};
+
 function renderHome() {
     return `
-        <!-- Hero Section -->
+        <!-- Hero Section Advanced -->
         <section class="hero-peerless">
-            <div class="hero-slide active">
-                <div class="container hero-container">
-                    <div class="hero-text animate-on-scroll">
-                        <span class="hero-badge">32 Years of Healing</span>
-                        <h1>A Legacy of <span class="text-accent">Healing</span>, Hope and Health</h1>
-                        <p>At the heart of our legacy lies a commitment to your well-being, spanning over a decade of exceptional homeopathic care.</p>
-                        <div class="hero-actions">
-                            <a href="/book" data-route="/book" class="btn btn-primary">Book Online</a>
-                            <a href="/about" data-route="/about" class="btn btn-outline">Know More</a>
-                        </div>
+            <div class="hero-background-blobs">
+                <div class="blob blob-1"></div>
+                <div class="blob blob-2"></div>
+                <div class="blob blob-3"></div>
+            </div>
+            <div class="container hero-container">
+                <div class="hero-text animate-on-scroll">
+                    <span class="hero-badge animate-child">✨ Recognized Excellence since 1994</span>
+                    <h1 class="animate-child"><span class="gradient-text">Holistic Healing</span> for a Healthier Tomorrow</h1>
+                    <p class="animate-child">Experience the power of classical Homeopathy. We combine decades of traditional wisdom with modern clinical precision to deliver permanent cures for chronic ailments.</p>
+                    <div class="hero-actions animate-child">
+                        <a href="/book" data-route="/book" class="btn btn-primary">Book Appointment <span>→</span></a>
+                        <a href="/treatments" data-route="/treatments" class="btn btn-outline">Explore Treatments</a>
                     </div>
-                    <div class="hero-visual animate-on-scroll">
-                        <div class="hero-image-wrapper">
-                            <img src="https://images.unsplash.com/photo-1631217818242-27497080803c?w=1000&auto=format" alt="Medical Care">
-                            <div class="hero-stats-card">
-                                <h3>5000+</h3>
-                                <p>Patients Treated</p>
+                </div>
+                <div class="hero-visual animate-on-scroll">
+                    <div class="hero-main-card glass-card">
+                        <img src="https://images.unsplash.com/photo-1631217818242-27497080803c?w=1000&auto=format" alt="Medical Care">
+                        <div class="floating-badge top-right animate-child">
+                            <span class="icon">🏆</span>
+                            <div>
+                                <strong>Top Rated</strong>
+                                <p>Clinic in Gorakhpur</p>
+                            </div>
+                        </div>
+                        <div class="floating-badge bottom-left animate-child">
+                            <span class="icon">👨‍⚕️</span>
+                            <div>
+                                <strong>10k+</strong>
+                                <p>Cases Resolved</p>
                             </div>
                         </div>
                     </div>
@@ -126,174 +169,109 @@ function renderHome() {
             </div>
         </section>
 
-        <!-- Quick Links / Simple Process -->
-        <section class="quick-links container">
+        <!-- Dynamic Process -->
+        <section class="process-section container">
             <div class="section-title">
-                <span class="sub-heading">Simple Process</span>
-                <h2>Helping You Stay Strong</h2>
+                <span class="sub-heading">Our Approach</span>
+                <h2>How We <span class="gradient-text">Heal</span> You</h2>
             </div>
             <div class="quick-links-grid">
-                <a href="/book" data-route="/book" class="quick-link-card animate-on-scroll">
-                    <div class="card-icon">📅</div>
-                    <h4>Online Appointment</h4>
-                    <p>Access healthcare easily with our online booking.</p>
+                <a href="/book" data-route="/book" class="glass-card quick-link-card animate-on-scroll">
+                    <div class="card-icon">01</div>
+                    <h4>Discovery</h4>
+                    <p>In-depth consultation to understand your unique symptoms and history.</p>
                 </a>
-                <a href="https://wa.me/917005574327" class="quick-link-card animate-on-scroll">
-                    <div class="card-icon">📞</div>
-                    <h4>Teleconsultation</h4>
-                    <p>Consult securely with our healthcare experts online.</p>
+                <a href="/book" data-route="/book" class="glass-card quick-link-card animate-on-scroll">
+                    <div class="card-icon">02</div>
+                    <h4>Analysis</h4>
+                    <p>Expert case study using classical homeopathic principles.</p>
                 </a>
-                <a href="/portal" data-route="/portal" class="quick-link-card animate-on-scroll">
-                    <div class="card-icon">📄</div>
-                    <h4>Reports Download</h4>
-                    <p>Get your investigation reports with just one click.</p>
+                <a href="/portal" data-route="/portal" class="glass-card quick-link-card animate-on-scroll">
+                    <div class="card-icon">03</div>
+                    <h4>Treatment</h4>
+                    <p>Precise medication tailored to your body's specific needs.</p>
                 </a>
-                <a href="/contact" data-route="/contact" class="quick-link-card animate-on-scroll">
-                    <div class="card-icon">❓</div>
-                    <h4>Enquiry</h4>
-                    <p>Simplify healthcare with easy enquiry options.</p>
+                <a href="/contact" data-route="/contact" class="glass-card quick-link-card animate-on-scroll">
+                    <div class="card-icon">04</div>
+                    <h4>Recovery</h4>
+                    <p>Continuous monitoring and support for lasting wellness.</p>
                 </a>
             </div>
         </section>
 
-        <!-- About Summary -->
-        <section class="about-summary bg-white">
-            <div class="container about-summary-grid">
-                <div class="about-summary-image animate-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800" alt="Dr. Vandita">
-                </div>
-                <div class="about-summary-text animate-on-scroll">
-                    <span class="sub-heading">Why Choose Us</span>
-                    <h2>A Multi-Specialty Homeopathy Clinic</h2>
-                    <p>Dr. Vandita's Homeopathy Clinic is built around the core principle of selfless, single-minded, and sustainable service with ethical practice. Having a pioneering status in the healthcare domain in Gorakhpur.</p>
-                    <div class="features-list">
-                        <div class="feature-item">
-                            <span class="icon">✅</span>
-                            <div>
-                                <h4>Expert Doctors</h4>
-                                <p>Highly qualified B.H.M.S practitioners with years of experience.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <span class="icon">✅</span>
-                            <div>
-                                <h4>24/7 Support</h4>
-                                <p>Emergency consultation and support available via WhatsApp.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="/about" data-route="/about" class="btn btn-primary mt-4">Read More</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats Section -->
+        <!-- Stats Advanced -->
         <section class="stats-peerless">
             <div class="container stats-grid">
                 <div class="stat-box animate-on-scroll">
-                    <h2 class="stat-number">10+</h2>
-                    <p>Years Experience</p>
+                    <div class="stat-number">15+</div>
+                    <p>Years of Practice</p>
                 </div>
                 <div class="stat-box animate-on-scroll">
-                    <h2 class="stat-number">5000+</h2>
-                    <p>Happy Patients</p>
+                    <div class="stat-number">50k+</div>
+                    <p>Consultations</p>
                 </div>
                 <div class="stat-box animate-on-scroll">
-                    <h2 class="stat-number">98%</h2>
-                    <p>Success Rate</p>
+                    <div class="stat-number">98%</div>
+                    <p>Patient Satisfaction</p>
                 </div>
                 <div class="stat-box animate-on-scroll">
-                    <h2 class="stat-number">24/7</h2>
-                    <p>Emergency Care</p>
+                    <div class="stat-number">24/7</div>
+                    <p>Support Access</p>
                 </div>
             </div>
         </section>
 
-        <!-- Our Experts -->
-        <section class="our-experts container">
-            <div class="section-title">
-                <span class="sub-heading">Doctors</span>
-                <h2>Our Consultants</h2>
-                <a href="/about" data-route="/about" class="btn-text">View All →</a>
-            </div>
-            <div class="experts-grid">
-                <div class="expert-card animate-on-scroll">
-                    <div class="expert-img" style="background-image: url('https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800')"></div>
-                    <div class="expert-info">
-                        <h4>Dr. Vandita Singh</h4>
-                        <p>B.H.M.S, Homeopathic Physician</p>
-                        <span class="expert-dept">SKIN & CHRONIC DISEASES</span>
-                        <a href="/book" data-route="/book" class="btn btn-outline btn-sm">Book Appointment</a>
-                    </div>
-                </div>
-                <!-- Placeholder for more doctors if needed -->
-            </div>
-        </section>
-
-        <!-- Testimonials -->
-        <section class="testimonials bg-light">
+        <!-- Testimonials Advanced -->
+        <section class="testimonials-advanced bg-white">
             <div class="container">
                 <div class="section-title">
-                    <span class="sub-heading">Testimonials</span>
-                    <h2>What Our Patients Say</h2>
+                    <span class="sub-heading">Global Trust</span>
+                    <h2>Voices of <span class="gradient-text">Healing</span></h2>
                 </div>
                 <div class="testimonials-grid">
-                    <div class="testimonial-card animate-on-scroll">
-                        <div class="quote-icon">"</div>
-                        <p>Excellent treatment for my chronic migraine. Dr. Vandita is very patient and knowledgeable.</p>
-                        <div class="patient-info">
-                            <h5>Sangita Maity</h5>
-                            <span>Patient</span>
+                    <div class="glass-card testimonial-card animate-on-scroll">
+                        <div class="testimonial-header">
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <div class="quote-icon">"</div>
+                        </div>
+                        <p>The treatment for my skin allergy was revolutionary. I had tried everything for years, but Dr. Vandita's approach finally gave me relief.</p>
+                        <div class="patient-profile">
+                            <div class="avatar">SM</div>
+                            <div>
+                                <h5>Sangita Maity</h5>
+                                <span>Verified Patient</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="testimonial-card animate-on-scroll">
-                        <div class="quote-icon">"</div>
-                        <p>Highly satisfied with the results for my skin condition. Natural and safe healing!</p>
-                        <div class="patient-info">
-                            <h5>Pritam Nag</h5>
-                            <span>Patient</span>
+                    <div class="glass-card testimonial-card animate-on-scroll">
+                        <div class="testimonial-header">
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <div class="quote-icon">"</div>
+                        </div>
+                        <p>Highly professional and empathetic. The digital records and easy WhatsApp support make the whole process so seamless.</p>
+                        <div class="patient-profile">
+                            <div class="avatar">PN</div>
+                            <div>
+                                <h5>Pritam Nag</h5>
+                                <span>Chronic Care</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="testimonial-card animate-on-scroll">
-                        <div class="quote-icon">"</div>
-                        <p>The best homeopathic clinic in Gorakhpur. Professional care and ethical practice.</p>
-                        <div class="patient-info">
-                            <h5>Sudarshan Samanta</h5>
-                            <span>Patient</span>
+                    <div class="glass-card testimonial-card animate-on-scroll">
+                        <div class="testimonial-header">
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <div class="quote-icon">"</div>
+                        </div>
+                        <p>Homeopathy that actually works! My migraine frequency has reduced significantly in just 3 months. Truly thankful.</p>
+                        <div class="patient-profile">
+                            <div class="avatar">SS</div>
+                            <div>
+                                <h5>Sudarshan Samanta</h5>
+                                <span>Health Enthusiast</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- International Patients -->
-        <section class="international-banner">
-            <div class="container international-grid">
-                <div class="international-text animate-on-scroll">
-                    <span class="sub-heading" style="color: white;">Global Care</span>
-                    <h2 style="color: white;">International Patient Services</h2>
-                    <p style="color: rgba(255,255,255,0.8);">Our international patient helpdesk ensures seamless healthcare with support in enquiries, appointments, and travel arrangements. Trust us for personalized assistance and the highest standard of care.</p>
-                    <div class="contact-box">
-                        <span>📞 +91 7005574327</span>
-                        <span>✉️ drvandita@clinic.in</span>
-                    </div>
-                    <a href="/contact" data-route="/contact" class="btn btn-accent mt-4">Know More</a>
-                </div>
-                <div class="international-image animate-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800" alt="International Patient" style="border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                </div>
-            </div>
-        </section>
-
-        <!-- Recent Blogs -->
-        <section class="recent-blogs container">
-            <div class="section-title">
-                <span class="sub-heading">Health Blog</span>
-                <h2>Keeping You Well</h2>
-                <a href="/blog" data-route="/blog" class="btn-text">View All Blogs →</a>
-            </div>
-            <div id="home-blog-grid" class="blog-grid-peerless">
-                <div class="loader">Loading...</div>
             </div>
         </section>
     `;
@@ -346,10 +324,10 @@ function renderTreatments() {
 function renderBooking() {
     return `
         <div class="container page-margin">
-            <div class="booking-container glass-card">
+            <div class="booking-wizard glass-card">
                 <div class="booking-header">
-                    <h2>Book an Appointment</h2>
-                    <div class="step-indicators">
+                    <h2 class="dm-serif">Book an Appointment</h2>
+                    <div class="progress-bar">
                         <div class="step-indicator active">1</div>
                         <div class="step-indicator">2</div>
                         <div class="step-indicator">3</div>
@@ -357,12 +335,12 @@ function renderBooking() {
                 </div>
 
                 <div id="step-1" class="booking-step active">
-                    <h3>Select Date & Time</h3>
+                    <div class="section-subtitle">Select Date & Time</div>
                     <div class="calendar-layout">
                         <div id="calendar-container"></div>
                         <div class="slots-section">
                             <h4>Available Slots</h4>
-                            <div id="slot-container" class="slots-grid">
+                            <div id="slot-container" class="slot-grid">
                                 <p class="text-muted">Select a date to see available slots</p>
                             </div>
                         </div>
@@ -370,16 +348,16 @@ function renderBooking() {
                     <div class="consultation-type mt-4">
                         <h4>Consultation Type</h4>
                         <div class="radio-group">
-                            <label><input type="radio" name="consultationType" value="in-person" checked> In-Person</label>
-                            <label><input type="radio" name="consultationType" value="video"> Video Call</label>
+                            <label class="radio-option"><input type="radio" name="consultationType" value="in-person" checked> <span>In-Person Visit</span></label>
+                            <label class="radio-option"><input type="radio" name="consultationType" value="video"> <span>Video Consultation</span></label>
                         </div>
                     </div>
                 </div>
 
                 <div id="step-2" class="booking-step">
-                    <h3>Patient Information</h3>
+                    <div class="section-subtitle">Patient Information</div>
                     <form id="booking-form">
-                        <div class="form-grid">
+                        <div class="form-row">
                             <div class="form-group">
                                 <label>Patient Name</label>
                                 <input type="text" name="patientName" required placeholder="Full Name">
@@ -388,6 +366,8 @@ function renderBooking() {
                                 <label>Phone Number</label>
                                 <input type="tel" name="phone" required pattern="[0-9]{10}" placeholder="10-digit mobile">
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group">
                                 <label>Age</label>
                                 <input type="number" name="age" required min="0" max="120">
@@ -400,21 +380,24 @@ function renderBooking() {
                                     <option value="other">Other</option>
                                 </select>
                             </div>
-                            <div class="form-group full-width">
-                                <label>Briefly describe your symptoms</label>
-                                <textarea name="symptoms" rows="3" placeholder="Symptoms, duration, etc."></textarea>
-                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Briefly describe your symptoms</label>
+                            <textarea name="symptoms" rows="3" placeholder="Symptoms, duration, etc."></textarea>
                         </div>
                     </form>
                 </div>
 
                 <div id="step-3" class="booking-step">
-                    <h3>Confirm & Pay</h3>
-                    <div id="booking-summary" class="summary-card"></div>
-                    <p class="text-muted mt-2">Note: Consultation fee of ₹200 is payable at the clinic.</p>
+                    <div class="section-subtitle">Confirm Your Booking</div>
+                    <div id="booking-summary" class="glass-card summary-card"></div>
+                    <div class="alert-info glass-card mt-4" style="background: var(--primary-light); padding: 20px;">
+                        <p><strong>Consultation Fee:</strong> ₹200 (Payable at the clinic)</p>
+                        <p class="text-sm">Please arrive 10 minutes before your scheduled time.</p>
+                    </div>
                 </div>
 
-                <div class="booking-footer">
+                <div class="booking-nav">
                     <button id="prev-btn" class="btn btn-outline" style="visibility: hidden" onclick="Booking.renderStep(Booking.currentStep - 1)">Previous</button>
                     <button id="next-btn" class="btn btn-accent" disabled onclick="Booking.currentStep === 3 ? Booking.confirm() : Booking.next()">
                         Next
@@ -428,14 +411,21 @@ function renderBooking() {
 function renderPortal() {
     return `
         <div class="container page-margin">
-            <div class="portal-login-container glass-card max-w-md mx-auto">
+            <div class="portal-login-container glass-card max-w-md mx-auto p-12 text-center">
+                <div class="portal-icon" style="font-size: 64px; margin-bottom: 20px;">👤</div>
                 <h1 class="dm-serif">Patient Portal</h1>
-                <p>Enter your registered phone number to view your records and prescriptions.</p>
-                <div class="form-group mt-4">
-                    <label>Phone Number</label>
-                    <input type="tel" id="portal-phone" placeholder="10-digit number">
+                <p class="text-muted mb-8">Access your clinical history, prescriptions, and upcoming appointments securely.</p>
+                
+                <div class="form-group text-left">
+                    <label>Registered Phone Number</label>
+                    <input type="tel" id="portal-phone" placeholder="Enter 10-digit number" class="glass-input">
                 </div>
-                <button class="btn btn-accent full-width mt-4" onclick="Portal.login()">Access Records</button>
+                
+                <button class="btn btn-primary full-width mt-8" onclick="Portal.login()">
+                    Access Dashboard <span>→</span>
+                </button>
+                
+                <p class="mt-8 text-sm text-muted">Not registered? <a href="/book" data-route="/book" class="text-accent">Book your first appointment</a></p>
             </div>
         </div>
     `;
@@ -444,13 +434,19 @@ function renderPortal() {
 function renderAdmin(sub) {
     return `
         <div class="container page-margin">
-            <div id="admin-login" class="glass-card max-w-md mx-auto">
-                <h1 class="dm-serif">Admin Login</h1>
-                <div class="form-group mt-4">
-                    <label>Enter Admin PIN</label>
-                    <input type="password" id="admin-pin" placeholder="****">
+            <div id="admin-login" class="glass-card max-w-md mx-auto p-12 text-center">
+                <div class="admin-icon" style="font-size: 64px; margin-bottom: 20px;">🔐</div>
+                <h1 class="dm-serif">Admin Gateway</h1>
+                <p class="text-muted mb-8">Secure access for clinical management.</p>
+                
+                <div class="form-group text-left">
+                    <label>Security PIN</label>
+                    <input type="password" id="admin-pin" placeholder="••••" class="glass-input text-center" style="font-size: 24px; letter-spacing: 10px;">
                 </div>
-                <button class="btn btn-accent full-width mt-4" onclick="Admin.verify()">Login</button>
+                
+                <button class="btn btn-accent full-width mt-8" onclick="Admin.verify()">
+                    Authenticate
+                </button>
             </div>
             <div id="admin-dashboard" class="hidden">
                 <!-- Populated by admin.js -->

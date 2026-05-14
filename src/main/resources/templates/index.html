@@ -9,7 +9,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <!-- CSS Files -->
   <link rel="stylesheet" href="/css/main.css">
@@ -19,12 +19,18 @@
   <link rel="stylesheet" href="/css/booking.css">
   <link rel="stylesheet" href="/css/dashboard.css">
   <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/ai-suite.css">
   <link rel="stylesheet" href="/css/responsive.css">
 
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+  <!-- Custom Cursor -->
+  <div id="custom-cursor"></div>
+
+  <!-- Theme Toggle Floating -->
+  <button id="theme-toggle" class="float-btn theme" title="Toggle Theme" onclick="toggleDarkMode()">🌓</button>
   <!-- Top Bar -->
   <div id="top-bar">
     <div class="container top-bar-content">
@@ -61,6 +67,7 @@
         <div class="nav-dropdown">
           <a href="/blog" data-route="/blog">Health Blog</a>
         </div>
+        <a href="/ai-suite" data-route="/ai-suite" class="btn-text" style="color: var(--accent); font-weight: 800;">✨ AI Health Suite</a>
         <a href="/contact" data-route="/contact">Contact Us</a>
         <a href="/portal" class="btn-portal" data-route="/portal">Patient Portal</a>
         <a href="/book" class="btn-book" data-route="/book">Book Appointment</a>
@@ -177,6 +184,8 @@
   <script src="/js/api.js"></script>
   <script src="/js/router.js"></script>
   <script src="/js/animations.js"></script>
+  <script src="/js/ai-suite.js"></script>
+  <script src="/js/chatbot.js"></script>
   <script src="/js/booking.js"></script>
   <script src="/js/portal.js"></script>
   <script src="/js/admin.js"></script>

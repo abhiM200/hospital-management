@@ -82,14 +82,20 @@ const Booking = {
     this.initCalendar(); // Refresh UI
     
     // Fetch slots
-    const slots = await API.get(`/slots/available?date=${date}`);
     const container = document.getElementById('slot-container');
-    container.innerHTML = slots.map(s => `
-      <button class="slot-btn ${!s.available ? 'disabled' : ''} ${this.data.slot === s.time ? 'selected' : ''}"
-              ${s.available ? `onclick="Booking.selectSlot('${s.time}')"` : 'disabled'}>
-        ${s.time}
-      </button>
-    `).join('');
+    container.innerHTML = '<div class="spinner"></div>';
+    
+    try {
+      const slots = await API.get(`/slots/available?date=${date}`);
+      container.innerHTML = slots.map(s => `
+        <button class="slot-btn ${!s.available ? 'disabled' : ''} ${this.data.slot === s.time ? 'selected' : ''}"
+                ${s.available ? `onclick="Booking.selectSlot('${s.time}')"` : 'disabled'}>
+          ${s.time}
+        </button>
+      `).join('') || '<p class="text-muted">No slots available for this date.</p>';
+    } catch (e) {
+      container.innerHTML = '<p class="text-danger">Error loading slots.</p>';
+    }
   },
 
   selectSlot(slot) {
@@ -101,7 +107,8 @@ const Booking = {
   next() {
     if (this.currentStep === 1) {
       if (!this.data.date || !this.data.slot) return toast('Please select date and time', 'warning');
-      this.data.type = document.querySelector('input[name="consultationType"]:checked').value;
+      const consultationType = document.querySelector('input[name="consultationType"]:checked');
+      if (consultationType) this.data.type = consultationType.value;
       this.renderStep(2);
     } else if (this.currentStep === 2) {
       const form = document.getElementById('booking-form');
@@ -138,14 +145,30 @@ const Booking = {
       });
       
       document.getElementById('app').innerHTML = `
-        <div class="container text-center mt-4 fade-in">
-          <div class="glass-card">
-            <div class="success-icon" style="font-size: 60px;">✅</div>
-            <h2>Booking Confirmed!</h2>
-            <p>Your Appointment ID is <strong>${res.id}</strong></p>
-            <p>Please arrive 10 minutes before your slot at ${res.slot} on ${res.date}.</p>
-            <div class="mt-4">
-              <a href="https://wa.me/917005574327?text=Hi, I booked an appointment ID ${res.id}" target="_blank" class="btn btn-accent">Share on WhatsApp</a>
+        <div class="container page-margin fade-in">
+          <div class="booking-wizard glass-card text-center" style="max-width: 600px; margin: 0 auto; padding: 60px 40px;">
+            <div class="success-icon heartbeat" style="font-size: 80px; margin-bottom: 20px;">🌿</div>
+            <h2 class="dm-serif" style="font-size: 32px; color: var(--primary);">Booking Confirmed!</h2>
+            <p style="font-size: 18px; margin-bottom: 30px;">Thank you for choosing Dr. Vandita's Clinic. Your appointment has been successfully scheduled.</p>
+            
+            <div class="summary-card" style="text-align: left; background: var(--bg-light); border: 1px solid var(--border);">
+              <div class="summary-item"><span class="summary-label">Appointment ID:</span><span class="summary-value" style="color: var(--primary);">#${res.id}</span></div>
+              <div class="summary-item"><span class="summary-label">Patient Name:</span><span class="summary-value">${res.patientName}</span></div>
+              <div class="summary-item"><span class="summary-label">Date & Time:</span><span class="summary-value">${res.date} at ${res.slot}</span></div>
+              <div class="summary-item"><span class="summary-label">Type:</span><span class="summary-value">${res.consultationType === 'video' ? 'Video Consultation' : 'In-Person Visit'}</span></div>
+            </div>
+            
+            <div class="alert-info mt-4" style="text-align: left;">
+              <p><strong>Next Steps:</strong></p>
+              <ul style="margin-top: 10px; padding-left: 20px;">
+                <li>A confirmation message has been sent to your phone.</li>
+                <li>${res.consultationType === 'video' ? 'You will receive a meeting link 15 minutes before the slot.' : 'Please arrive 10 minutes early at Padri Bazar clinic.'}</li>
+                <li>Consultation fee of ₹200 is payable ${res.consultationType === 'video' ? 'online' : 'at the clinic'}.</li>
+              </ul>
+            </div>
+
+            <div class="mt-4 flex-center gap-3">
+              <a href="https://wa.me/917005574327?text=Hi, I booked an appointment ID ${res.id} for ${res.date}" target="_blank" class="btn btn-accent">Share on WhatsApp</a>
               <button onclick="window.print()" class="btn btn-outline">Print Receipt</button>
             </div>
             <div class="mt-4">

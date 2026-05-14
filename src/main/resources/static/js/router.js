@@ -6,7 +6,8 @@ const routes = {
   '/portal': () => loadPage('portal'),
   '/admin': () => loadPage('admin'),
   '/blog': () => loadPage('blog'),
-  '/contact': () => loadPage('contact')
+  '/contact': () => loadPage('contact'),
+  '/ai-suite': () => loadPage('ai-suite')
 };
 
 // Also handle dynamic routes like /blog/slug

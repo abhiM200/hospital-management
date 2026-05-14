@@ -56,6 +56,34 @@
   display: block;
 }
 
+/* Layouts */
+.calendar-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .calendar-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.slots-section {
+  padding-left: 20px;
+  border-left: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  .slots-section {
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+}
+
 /* Calendar */
 .calendar-header {
   display: flex;
@@ -136,31 +164,47 @@
   cursor: not-allowed;
 }
 
-/* Form */
+/* Form Elements Advanced */
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--primary);
+  font-family: var(--font-ui);
+  font-size: 14px;
 }
 
-.form-group input, .form-group select, .form-group textarea {
+.glass-input, .form-group input, .form-group select, .form-group textarea {
   width: 100%;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  font-family: inherit;
-  font-size: 15px;
+  padding: 14px 20px;
+  background: var(--surface-glass);
+  backdrop-filter: blur(5px);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-family: var(--font-body);
+  transition: var(--transition);
+  outline: none;
+}
+
+.glass-input:focus, .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--primary);
+  background: var(--white);
+  box-shadow: 0 0 0 4px var(--primary-glow);
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .form-row { grid-template-columns: 1fr; }
 }
 
 .radio-group {

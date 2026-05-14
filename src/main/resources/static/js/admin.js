@@ -184,8 +184,29 @@ const Admin = {
     try {
       await API.put(`/appointments/${id}/status`, { status });
       toast('Status updated');
-      this.loadTab('appointments');
+      // Update local UI without full reload
+      const row = document.querySelector(`tr select[onchange*="${id}"]`).closest('tr');
+      const badge = row.querySelector('.status-badge');
+      badge.className = `status-badge status-${status}`;
     } catch (e) { toast('Update failed', 'error'); }
+  },
+
+  filterAppointments() {
+    const date = document.getElementById('admin-date-filter').value;
+    const rows = document.querySelectorAll('#admin-appts-body tr');
+    rows.forEach(row => {
+      const rowDate = row.getAttribute('data-date');
+      row.style.display = (!date || rowDate === date) ? '' : 'none';
+    });
+  },
+
+  searchPatients(query) {
+    const q = query.toLowerCase();
+    const rows = document.querySelectorAll('#patients-table tr');
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      row.style.display = text.includes(q) ? '' : 'none';
+    });
   },
 
   openRxWriter(appointmentId) {

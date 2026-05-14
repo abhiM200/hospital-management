@@ -1,0 +1,170 @@
+/* AI Suite Specific Styles */
+.ai-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+}
+
+@media (max-width: 768px) {
+    .ai-grid { grid-template-columns: 1fr; }
+}
+
+.ai-tool-card {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tool-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.tool-icon {
+    font-size: 32px;
+    background: var(--primary-light);
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag {
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tag button {
+    background: transparent;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    background: rgba(0,0,0,0.02);
+}
+
+.upload-area:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.upload-placeholder span {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Prediction Results */
+.prediction-item {
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.prediction-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.progress-bar-small {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 3px;
+    transition: width 1s ease-out;
+}
+
+/* Report Table */
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.report-table th {
+    text-align: left;
+    padding: 10px;
+    color: var(--text-muted);
+}
+
+.report-table td {
+    padding: 10px;
+    border-top: 1px solid var(--border);
+}
+
+.report-table tr.danger { background: rgba(237, 28, 36, 0.05); color: var(--accent); font-weight: 700; }
+.report-table tr.warning { background: rgba(251, 191, 36, 0.05); color: #b45309; }
+.report-table tr.success { color: #059669; }
+
+/* Risk Grid */
+.risk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.risk-item {
+    background: var(--bg);
+    padding: 15px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.risk-item .label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.risk-item .value {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+/* Warning Item */
+.warning-item {
+    padding: 10px;
+    background: rgba(237, 28, 36, 0.03);
+    border-radius: var(--radius-sm);
+}
+
+.warning-item strong {
+    color: var(--accent);
+    font-size: 14px;
+}

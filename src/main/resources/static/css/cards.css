@@ -1,157 +1,124 @@
-.section-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.section-header h2 {
-  font-size: 42px;
-  color: var(--text);
-}
-
-.section-header p {
-  color: var(--text-muted);
-  font-size: 18px;
-}
-
+/* Advanced Cards & Components */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+  gap: 30px;
 }
 
-/* Service Card */
-.service-card {
+/* Process Card */
+.process-section {
+  padding: 100px 0;
+}
+
+.quick-link-card {
+  padding: 40px 30px;
   text-align: left;
-  padding: 32px;
-  position: relative;
-  overflow: hidden;
+  border-bottom: 4px solid transparent;
 }
 
-.service-icon {
-  font-size: 40px;
+.quick-link-card:hover {
+  border-bottom-color: var(--accent);
+}
+
+.quick-link-card .card-icon {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--primary-light);
   margin-bottom: 20px;
-  width: 70px;
-  height: 70px;
-  background: var(--primary-light);
-  border-radius: var(--radius);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: var(--transition);
+  font-family: var(--font-body);
+  position: relative;
+  z-index: 1;
 }
 
-.service-card:hover .service-icon {
-  background: var(--primary);
-  transform: rotate(10deg);
-}
-
-.service-card h3 {
+.quick-link-card h4 {
   font-size: 22px;
   margin-bottom: 12px;
-}
-
-.service-card p {
-  color: var(--text-muted);
-  font-size: 15px;
-  margin-bottom: 20px;
-}
-
-.btn-text {
   color: var(--primary);
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
-.btn-text:hover {
-  gap: 12px;
+/* Testimonials Advanced */
+.testimonials-advanced {
+  padding: 120px 0;
+  background: radial-gradient(circle at 50% 50%, var(--primary-light) 0%, transparent 70%);
 }
 
-/* Blog Card */
-.blog-card {
-  padding: 0;
-  overflow: hidden;
-}
-
-.blog-img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.blog-body {
-  padding: 24px;
-}
-
-.blog-meta {
-  display: flex;
-  gap: 16px;
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-bottom: 12px;
-}
-
-.blog-category {
-  color: var(--primary);
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.blog-card h3 {
-  font-size: 20px;
-  line-height: 1.4;
-  margin-bottom: 12px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.blog-card p {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin-bottom: 20px;
-}
-
-/* Testimonial Card */
 .testimonial-card {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px;
+  min-height: 320px;
+}
+
+.testimonial-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.stars {
+  color: #fbbf24;
+  letter-spacing: 2px;
+  font-size: 14px;
 }
 
 .quote-icon {
-  font-size: 40px;
+  font-size: 60px;
   color: var(--primary);
-  opacity: 0.2;
-  margin-bottom: 10px;
+  opacity: 0.1;
+  font-family: serif;
 }
 
-.testimonial-text {
+.testimonial-card p {
+  font-size: 17px;
+  color: var(--text);
+  line-height: 1.7;
   font-style: italic;
-  font-size: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
 }
 
-.patient-info {
+.patient-profile {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
+  gap: 15px;
 }
 
-.patient-avatar {
-  width: 40px;
-  height: 40px;
+.avatar {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: var(--primary-light);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-weight: bold;
-  color: var(--primary);
+  justify-content: center;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
 }
 
-.patient-name {
-  font-weight: 700;
-  font-size: 15px;
+.patient-profile h5 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.patient-profile span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Common Animation for reveal */
+.fade-in {
+  animation: revealUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
