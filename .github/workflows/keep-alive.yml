@@ -10,5 +10,4 @@ jobs:
     steps:
       - name: Ping Render Backend
         run: |
-          # Replace with your actual Render URL if different
-          curl -s https://vandita-clinic-backend.onrender.com/api/health
+          curl -s https://hospital-management-0iwb.onrender.com/api/health
