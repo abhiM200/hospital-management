@@ -1,0 +1,14 @@
+name: Keep Server Awake
+on:
+  schedule:
+    - cron: '*/14 * * * *' # Runs every 14 minutes
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render Backend
+        run: |
+          # Replace with your actual Render URL if different
+          curl -s https://vandita-clinic-backend.onrender.com/api/health

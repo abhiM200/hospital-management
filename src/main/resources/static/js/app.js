@@ -78,6 +78,21 @@ async function loadPage(page, slug = null) {
     
     // Re-initialize any page-specific animations
     if (typeof initAnimations === 'function') initAnimations();
+    
+    // Keep server awake while browsing
+    initKeepAlive();
+}
+
+function initKeepAlive() {
+    if (window.keepAliveInterval) return;
+    window.keepAliveInterval = setInterval(async () => {
+        try {
+            await fetch('/api/health');
+            console.log('⚡ Keep-Alive: Ping successful');
+        } catch (e) {
+            console.warn('⚡ Keep-Alive: Ping failed');
+        }
+    }, 10 * 60 * 1000); // 10 minutes
 }
 
 async function populateHomeBlogs() {
