@@ -28,58 +28,67 @@ const Booking = {
     if (!container) return;
     
     const today = new Date();
-    let curMonth = today.getMonth();
-    let curYear = today.getFullYear();
+    this.curMonth = today.getMonth();
+    this.curYear = today.getFullYear();
 
-    const render = (month, year) => {
-      const firstDay = new Date(year, month, 1).getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
+    this.renderCalendar();
+  },
+
+  renderCalendar() {
+    const container = document.getElementById('calendar-container');
+    if (!container) return;
+    
+    const month = this.curMonth;
+    const year = this.curYear;
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const monthName = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date(year, month));
+    
+    let html = `
+      <div class="calendar-header">
+        <button onclick="Booking.changeMonth(-1)">‹</button>
+        <h4>${monthName} ${year}</h4>
+        <button onclick="Booking.changeMonth(1)">›</button>
+      </div>
+      <div class="calendar-grid">
+        <div class="day-name">Su</div><div class="day-name">Mo</div><div class="day-name">Tu</div>
+        <div class="day-name">We</div><div class="day-name">Th</div><div class="day-name">Fr</div><div class="day-name">Sa</div>
+    `;
+    
+    for (let i = 0; i < firstDay; i++) html += '<div></div>';
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+      const d = new Date(year, month, day);
+      const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const isPast = d < today;
+      const isSunday = d.getDay() === 0;
+      const disabled = isPast || isSunday;
+      const isSelected = this.data.date === dateStr;
       
-      const monthName = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date(year, month));
-      
-      let html = `
-        <div class="calendar-header">
-          <button onclick="Booking.changeMonth(-1)">‹</button>
-          <h4>${monthName} ${year}</h4>
-          <button onclick="Booking.changeMonth(1)">›</button>
+      html += `
+        <div class="calendar-day ${disabled ? 'disabled' : ''} ${isSelected ? 'selected' : ''}" 
+             ${!disabled ? `onclick="Booking.selectDate('${dateStr}')"` : ''}>
+          ${day}
         </div>
-        <div class="calendar-grid">
-          <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
       `;
-      
-      for (let i = 0; i < firstDay; i++) html += '<div></div>';
-      
-      for (let day = 1; day <= daysInMonth; day++) {
-        const d = new Date(year, month, day);
-        const dateStr = d.toISOString().split('T')[0];
-        const isPast = d < today.setHours(0,0,0,0);
-        const isSunday = d.getDay() === 0;
-        const disabled = isPast || isSunday;
-        
-        html += `
-          <div class="calendar-day ${disabled ? 'disabled' : ''} ${this.data.date === dateStr ? 'selected' : ''}" 
-               ${!disabled ? `onclick="Booking.selectDate('${dateStr}')"` : ''}>
-            ${day}
-          </div>
-        `;
-      }
-      html += '</div>';
-      container.innerHTML = html;
-    };
+    }
+    html += '</div>';
+    container.innerHTML = html;
+  },
 
-    this.changeMonth = (delta) => {
-      curMonth += delta;
-      if (curMonth < 0) { curMonth = 11; curYear--; }
-      if (curMonth > 11) { curMonth = 0; curYear++; }
-      render(curMonth, curYear);
-    };
-
-    render(curMonth, curYear);
+  changeMonth(delta) {
+    this.curMonth += delta;
+    if (this.curMonth < 0) { this.curMonth = 11; this.curYear--; }
+    if (this.curMonth > 11) { this.curMonth = 0; this.curYear++; }
+    this.renderCalendar();
   },
 
   async selectDate(date) {
     this.data.date = date;
-    this.initCalendar(); // Refresh UI
+    this.renderCalendar(); // Refresh UI
     
     // Fetch slots
     const container = document.getElementById('slot-container');

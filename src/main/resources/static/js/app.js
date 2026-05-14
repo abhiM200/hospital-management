@@ -129,12 +129,13 @@ function renderHome() {
             </div>
             <div class="container hero-container">
                 <div class="hero-text animate-on-scroll">
-                    <span class="hero-badge animate-child">✨ Recognized Excellence since 1994</span>
-                    <h1 class="animate-child"><span class="gradient-text">Holistic Healing</span> for a Healthier Tomorrow</h1>
-                    <p class="animate-child">Experience the power of classical Homeopathy. We combine decades of traditional wisdom with modern clinical precision to deliver permanent cures for chronic ailments.</p>
-                    <div class="hero-actions animate-child">
+                    <div class="hero-badge pulse">✨ Recognized Excellence since 2024</div>
+                    <span class="sub-heading">Classical Homeopathy</span>
+                    <h1>Holistic Healing for <span class="gradient-text">Body & Mind</span></h1>
+                    <p>Experience safe, natural, and permanent cures for chronic diseases with Dr. Vandita's 3+ years of clinical expertise.</p>
+                    <div class="hero-actions">
                         <a href="/book" data-route="/book" class="btn btn-primary">Book Appointment <span>→</span></a>
-                        <a href="/treatments" data-route="/treatments" class="btn btn-outline">Explore Treatments</a>
+                        <a href="/treatments" data-route="/treatments" class="btn btn-outline">Our Treatments</a>
                     </div>
                 </div>
                 <div class="hero-visual animate-on-scroll">
@@ -278,7 +279,7 @@ function renderAbout() {
         <div class="container page-margin">
             <div class="about-summary-grid">
                 <div class="about-summary-text">
-                    <p>Dr. Vandita is a highly qualified B.H.M.S Homeopathic Physician with over a decade of experience in providing holistic healthcare. Her journey in homeopathy started with a passion for natural medicine and a belief that the human body has an innate ability to heal itself when given the right stimulus.</p>
+                    <p>Dr. Vandita is a highly qualified B.H.M.S Homeopathic Physician with 3+ years of experience in providing holistic healthcare. Her journey in homeopathy started with a passion for natural medicine and a belief that the human body has an innate ability to heal itself when given the right stimulus.</p>
                     <p>Specializing in chronic conditions like PCOD, Thyroid, Skin diseases, and Migraine, she has successfully treated thousands of patients from all walks of life.</p>
                     <p>Our clinic is dedicated to providing personalized care, focusing on the root cause of ailments rather than just suppressing symptoms. We use high-quality homeopathic remedies and modern diagnostic insights to ensure the best outcomes for our patients.</p>
                 </div>
