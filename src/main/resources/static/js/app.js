@@ -510,6 +510,90 @@ async function renderBlogPost(app, slug) {
     }
 }
 
+function renderAISuite() {
+    return `
+        <section class="hero-peerless hero-small">
+            <div class="container">
+                <span class="sub-heading">Advanced Diagnostics</span>
+                <h1 class="gradient-text">AI Health Suite</h1>
+                <p>Harness the power of AI for faster insights and better health decisions.</p>
+            </div>
+        </section>
+
+        <div class="container page-margin">
+            <div class="ai-grid">
+                <!-- Disease Prediction -->
+                <div class="glass-card ai-tool-card animate-on-scroll">
+                    <div class="tool-header">
+                        <span class="tool-icon">🧠</span>
+                        <h3>Disease Prediction</h3>
+                    </div>
+                    <p>Enter your symptoms to see potential health conditions.</p>
+                    <div class="input-group mt-4">
+                        <input type="text" id="symptom-input" placeholder="e.g. Fever, Cough, Fatigue..." class="glass-input">
+                        <div id="symptom-tags" class="tags-container mt-2"></div>
+                        <button class="btn btn-primary full-width mt-4" onclick="AISuite.analyzeSymptoms()">Analyze Symptoms</button>
+                    </div>
+                    <div id="analysis-result" class="mt-4"></div>
+                </div>
+
+                <!-- Medical Report Analyzer -->
+                <div class="glass-card ai-tool-card animate-on-scroll">
+                    <div class="tool-header">
+                        <span class="tool-icon">📄</span>
+                        <h3>Report Analyzer</h3>
+                    </div>
+                    <p>Upload Blood reports, X-rays, or ECGs for instant analysis.</p>
+                    <div class="upload-area mt-4" onclick="document.getElementById('report-upload').click()">
+                        <input type="file" id="report-upload" class="hidden" onchange="AISuite.analyzeReport()">
+                        <div class="upload-placeholder">
+                            <span>⬆️</span>
+                            <p>Click to upload Medical Report</p>
+                            <span class="text-xs text-muted">Supports JPG, PNG, PDF</span>
+                        </div>
+                    </div>
+                    <div id="report-result" class="mt-4"></div>
+                </div>
+
+                <!-- Prescription Analyzer -->
+                <div class="glass-card ai-tool-card animate-on-scroll">
+                    <div class="tool-header">
+                        <span class="tool-icon">💊</span>
+                        <h3>Prescription Safety</h3>
+                    </div>
+                    <p>Check for drug interactions, allergies, and overdose alerts.</p>
+                    <div class="upload-area mt-4" onclick="document.getElementById('rx-upload').click()">
+                        <input type="file" id="rx-upload" class="hidden" onchange="AISuite.analyzePrescription()">
+                        <div class="upload-placeholder">
+                            <span>📷</span>
+                            <p>Upload Doctor's Prescription</p>
+                        </div>
+                    </div>
+                    <div id="rx-analysis-result" class="mt-4"></div>
+                </div>
+
+                <!-- Health Risk Score -->
+                <div class="glass-card ai-tool-card animate-on-scroll">
+                    <div class="tool-header">
+                        <span class="tool-icon">⚖️</span>
+                        <h3>Health Risk Score</h3>
+                    </div>
+                    <p>Calculate your BMI, Heart, and Lifestyle risk scores.</p>
+                    <div class="risk-form mt-4">
+                        <div class="form-row">
+                            <div class="form-group"><label>Age</label><input type="number" id="risk-age" class="glass-input"></div>
+                            <div class="form-group"><label>Weight (kg)</label><input type="number" id="risk-weight" class="glass-input"></div>
+                        </div>
+                        <div class="form-group"><label>Height (cm)</label><input type="number" id="risk-height" class="glass-input"></div>
+                        <button class="btn btn-accent full-width" onclick="AISuite.calculateRiskScore()">Generate Score</button>
+                    </div>
+                    <div id="risk-result" class="mt-4"></div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 function renderContact() {
     return `
         <section class="hero-peerless hero-small">
