@@ -98,11 +98,18 @@ a {
 
 .top-info {
   display: flex;
+  align-items: center;
   gap: 20px;
 }
 
 .info-item:hover {
   color: var(--accent);
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .btn-top {
@@ -111,6 +118,14 @@ a {
   padding: 4px 12px;
   border-radius: 4px;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  transition: var(--transition);
+}
+
+.btn-top:hover {
+  background: var(--accent-dark);
+  transform: translateY(-1px);
 }
 
 /* Navbar Update */

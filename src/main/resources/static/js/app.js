@@ -565,6 +565,20 @@ function renderAISuite() {
                     </div>
                     <div id="risk-result" class="mt-4"></div>
                 </div>
+
+                <!-- Heart Predictor -->
+                <div class="glass-card ai-tool-card animate-on-scroll">
+                    <div class="tool-header">
+                        <span class="tool-icon">❤️</span>
+                        <h3>Heart Predictor ML</h3>
+                    </div>
+                    <p>Advanced Machine Learning model to predict heart disease risk based on clinical parameters.</p>
+                    <div class="mt-4">
+                        <a href="https://abhim200.github.io/Heart-Predictor-Using-Machine-Learning/" target="_blank" class="btn btn-primary full-width" style="justify-content: center;">
+                            Launch Predictor <span style="margin-left: 8px;">↗</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     `;
