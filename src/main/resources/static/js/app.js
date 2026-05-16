@@ -389,9 +389,9 @@ function renderBooking() {
                 </div>
 
                 <div class="booking-nav">
-                    <button id="prev-btn" class="btn btn-outline" style="visibility: hidden" onclick="Booking.renderStep(Booking.currentStep - 1)">Previous</button>
+                    <button id="prev-btn" class="btn btn-outline" style="visibility:hidden;" onclick="Booking.renderStep(Booking.currentStep - 1)">← Previous</button>
                     <button id="next-btn" class="btn btn-accent" disabled onclick="Booking.currentStep === 3 ? Booking.confirm() : Booking.next()">
-                        Next
+                        Next →
                     </button>
                 </div>
             </div>
@@ -423,27 +423,8 @@ function renderPortal() {
 }
 
 function renderAdmin(sub) {
-    return `
-        <div class="container page-margin">
-            <div id="admin-login" class="glass-card max-w-md mx-auto p-12 text-center">
-                <div class="admin-icon" style="font-size: 64px; margin-bottom: 20px;">🔐</div>
-                <h1 class="dm-serif">Admin Gateway</h1>
-                <p class="text-muted mb-8">Secure access for clinical management.</p>
-                
-                <div class="form-group text-left">
-                    <label>Security PIN</label>
-                    <input type="password" id="admin-pin" placeholder="••••" class="glass-input text-center" style="font-size: 24px; letter-spacing: 10px;">
-                </div>
-                
-                <button class="btn btn-accent full-width mt-8" onclick="Admin.verify()">
-                    Authenticate
-                </button>
-            </div>
-            <div id="admin-dashboard" class="hidden">
-                <!-- Populated by admin.js -->
-            </div>
-        </div>
-    `;
+    // Admin.init() immediately replaces this with its own login/dashboard UI
+    return `<div class="container page-margin"><div class="spinner" style="margin:80px auto;"></div></div>`;
 }
 
 async function renderBlog(app) {

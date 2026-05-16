@@ -10,6 +10,7 @@
   --accent-glow: rgba(237, 28, 36, 0.15);
   
   --bg: #f8fafc;
+  --bg-light: #f1f5f9;
   --surface: #ffffff;
   --surface-glass: rgba(255, 255, 255, 0.8);
   
@@ -23,15 +24,20 @@
   --font-body: 'Outfit', sans-serif;
   --font-ui: 'Nunito', sans-serif;
 
-  /* Modern Spacing & Effects */
+  /* Spacing & Radius — ALL aliases defined */
   --radius-sm: 8px;
+  --radius: 12px;         /* alias used widely in component CSS */
   --radius-md: 16px;
   --radius-lg: 24px;
+  --radius-xl: 30px;      /* used in hero / about image wrappers */
   --radius-full: 9999px;
   
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-  --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.05);
-  --shadow-lg: 0 20px 50px -12px rgba(0,0,0,0.15);
+  /* Shadows — ALL aliases defined */
+  --shadow-sm:    0 1px 3px rgba(0,0,0,0.08);
+  --shadow:       0 4px 15px rgba(0,0,0,0.08);   /* alias used widely */
+  --shadow-md:    0 10px 25px -5px rgba(0,0,0,0.06), 0 8px 10px -6px rgba(0,0,0,0.05);
+  --shadow-lg:    0 20px 50px -12px rgba(0,0,0,0.15);
+  --shadow-hover: 0 20px 40px rgba(0,0,0,0.15);  /* alias used on hover states */
   --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   
   --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -40,12 +46,16 @@
 
 [data-theme="dark"] {
   --bg: #0f172a;
+  --bg-light: #1e293b;
   --surface: #1e293b;
   --surface-glass: rgba(30, 41, 59, 0.8);
   --text: #f8fafc;
   --text-muted: #94a3b8;
   --border: #334155;
   --primary-light: rgba(0, 75, 145, 0.2);
+  --white: #1e293b;
+  --shadow: 0 4px 15px rgba(0,0,0,0.3);
+  --shadow-hover: 0 20px 40px rgba(0,0,0,0.4);
 }
 
 * {
@@ -298,6 +308,63 @@ a {
   text-align: center;
   font-size: 13px;
   color: #a0aec0;
+}
+
+/* Page margin utility — used across all page sections */
+.page-margin {
+  padding: 60px 0;
+}
+
+/* Section subtitle — used inside booking/admin panels */
+.section-subtitle {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 20px;
+  display: block;
+}
+
+/* gap utility */
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+
+/* mt utilities */
+.mt-2 { margin-top: 8px; }
+.mt-4 { margin-top: 16px; }
+
+/* text utilities */
+.text-sm { font-size: 13px; }
+.text-muted { color: var(--text-muted); }
+.text-accent { color: var(--accent); }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+
+/* width */
+.full-width { width: 100%; }
+
+/* display */
+.hidden { display: none !important; }
+
+/* btn-text link style */
+.btn-text {
+  color: var(--primary);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+.btn-text:hover { color: var(--accent); gap: 10px; }
+
+/* alert-info */
+.alert-info {
+  background: var(--primary-light);
+  border: 1px solid rgba(0,75,145,0.2);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  color: var(--primary);
 }
 
 /* Advanced Utilities */
