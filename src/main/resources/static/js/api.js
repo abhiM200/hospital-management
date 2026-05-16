@@ -14,7 +14,7 @@ const API = {
       if (res.status === 204) return null;
       return await res.json();
     } catch (e) {
-      console.error('API Error:', e);
+      console.error(`API Error [${this.base + path}]:`, e);
       throw e;
     }
   },

@@ -180,8 +180,9 @@ const Booking = {
       } else {
         container.innerHTML = `
           <div class="error-state">
-            <p>Failed to load slots.</p>
-            <button class="btn btn-outline btn-sm mt-2" onclick="Booking.fetchSlots('${date}')">🔄 Retry</button>
+            <p style="color:var(--accent); font-weight:700;">Failed to load slots.</p>
+            <p style="font-size:12px; margin-top:4px; opacity:0.7;">${e.message || 'The server might be offline.'}</p>
+            <button class="btn btn-outline btn-sm mt-3" onclick="Booking.fetchSlots('${date}')">🔄 Try Again</button>
           </div>
         `;
       }
