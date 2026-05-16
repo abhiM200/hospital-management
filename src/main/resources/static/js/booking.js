@@ -6,27 +6,33 @@ const Booking = {
     type: 'in-person',
     patient: {}
   },
+  loading: false,
 
   async init() {
     this.data = { date: null, slot: null, type: 'in-person', patient: {} };
     this.currentStep = 1;
     this.renderStep(1);
     this.initCalendar();
+    
+    // Wire up consultation type radio buttons
+    document.querySelectorAll('input[name="consultationType"]').forEach(input => {
+      input.addEventListener('change', (e) => {
+        this.data.type = e.target.value;
+        if (this.data.date) this.selectDate(this.data.date); // Refresh slots if needed
+      });
+    });
   },
 
   // ── Step Navigation ────────────────────────────────────────────
 
   renderStep(step) {
-    // Bounds-check
     if (step < 1) step = 1;
     if (step > 3) step = 3;
 
-    // Show/hide steps
     document.querySelectorAll('.booking-step').forEach(el => el.classList.remove('active'));
     const stepEl = document.getElementById(`step-${step}`);
     if (stepEl) stepEl.classList.add('active');
 
-    // Step indicators
     document.querySelectorAll('.step-indicator').forEach((el, i) => {
       el.classList.toggle('active', i + 1 === step);
       el.classList.toggle('completed', i + 1 < step);
@@ -34,13 +40,11 @@ const Booking = {
 
     this.currentStep = step;
 
-    // ── Manage Prev button ──
     const prevBtn = document.getElementById('prev-btn');
     if (prevBtn) {
       prevBtn.style.visibility = step > 1 ? 'visible' : 'hidden';
     }
 
-    // ── Manage Next/Confirm button ──
     const nextBtn = document.getElementById('next-btn');
     if (nextBtn) {
       if (step === 3) {
@@ -50,7 +54,6 @@ const Booking = {
         nextBtn.textContent = 'Next →';
         nextBtn.disabled = false;
       } else {
-        // Step 1 — only enable when a slot is selected
         nextBtn.textContent = 'Next →';
         nextBtn.disabled = !this.data.slot;
       }
@@ -92,7 +95,6 @@ const Booking = {
         <div class="day-name">We</div><div class="day-name">Th</div><div class="day-name">Fr</div><div class="day-name">Sa</div>
     `;
 
-    // Empty cells before 1st
     for (let i = 0; i < firstDay; i++) html += '<div></div>';
 
     for (let day = 1; day <= daysInMonth; day++) {
@@ -126,46 +128,73 @@ const Booking = {
 
   async selectDate(date) {
     this.data.date = date;
-    this.data.slot = null; // reset slot when date changes
+    this.data.slot = null;
     this.renderCalendar();
 
-    // Reset next button since slot was cleared
     const nextBtn = document.getElementById('next-btn');
     if (nextBtn) nextBtn.disabled = true;
 
+    this.renderSlotsSkeleton();
+    await this.fetchSlots(date);
+  },
+
+  renderSlotsSkeleton() {
     const container = document.getElementById('slot-container');
     if (!container) return;
-    container.innerHTML = '<div class="spinner" style="margin: 20px auto;"></div>';
+    container.innerHTML = Array(8).fill(0).map(() => `
+      <div class="skeleton" style="height: 50px; border-radius: 8px;"></div>
+    `).join('');
+  },
+
+  async fetchSlots(date, retryCount = 0) {
+    const container = document.getElementById('slot-container');
+    if (!container) return;
 
     try {
       const slots = await API.get(`/slots/available?date=${date}`);
-
+      
       if (!slots || slots.length === 0) {
-        container.innerHTML = '<p class="text-muted">No slots available for this date.</p>';
+        container.innerHTML = `
+          <div class="empty-state">
+            <div style="font-size: 40px; margin-bottom: 10px;">📅</div>
+            <p>No slots available for this date.</p>
+            <p class="text-xs">Try selecting another date or consultation type.</p>
+          </div>
+        `;
         return;
       }
 
       container.innerHTML = slots.map(s => `
-        <button class="slot-btn ${!s.available ? 'disabled' : ''} ${this.data.slot === s.time ? 'selected' : ''}"
+        <button class="slot-btn animate-in ${!s.available ? 'disabled' : ''} ${this.data.slot === s.time ? 'selected' : ''}"
+                style="animation-delay: ${Math.random() * 0.2}s"
                 ${s.available ? `onclick="Booking.selectSlot('${s.time}')"` : 'disabled'}>
-          ${s.time}
+          <div class="slot-time">${s.time}</div>
+          <div class="slot-status">${s.available ? 'Available' : (s.blocked ? 'Unavailable' : 'Full')}</div>
         </button>
       `).join('');
+
     } catch (e) {
       console.error('Slot fetch error:', e);
-      container.innerHTML = '<p class="text-muted" style="color:var(--accent)">Could not load slots. Please try again.</p>';
+      if (retryCount < 2) {
+        setTimeout(() => this.fetchSlots(date, retryCount + 1), 1000);
+      } else {
+        container.innerHTML = `
+          <div class="error-state">
+            <p>Failed to load slots.</p>
+            <button class="btn btn-outline btn-sm mt-2" onclick="Booking.fetchSlots('${date}')">🔄 Retry</button>
+          </div>
+        `;
+      }
     }
   },
 
   selectSlot(slot) {
     this.data.slot = slot;
-
-    // Update visual selection on all slot buttons
     document.querySelectorAll('.slot-btn').forEach(b => {
-      b.classList.toggle('selected', b.textContent.trim() === slot);
+      const time = b.querySelector('.slot-time').textContent.trim();
+      b.classList.toggle('selected', time === slot);
     });
 
-    // Enable the Next button
     const nextBtn = document.getElementById('next-btn');
     if (nextBtn) nextBtn.disabled = false;
   },
@@ -199,8 +228,6 @@ const Booking = {
     }
   },
 
-  // ── Summary ────────────────────────────────────────────────────
-
   renderSummary() {
     const s = document.getElementById('booking-summary');
     if (!s) return;
@@ -217,13 +244,14 @@ const Booking = {
     `;
   },
 
-  // ── Confirm & Submit ───────────────────────────────────────────
-
   async confirm() {
+    if (this.loading) return;
+    this.loading = true;
+
     const nextBtn = document.getElementById('next-btn');
     if (nextBtn) {
       nextBtn.disabled = true;
-      nextBtn.textContent = 'Booking...';
+      nextBtn.innerHTML = '<span class="spinner-small"></span> Booking...';
     }
 
     try {
@@ -236,44 +264,8 @@ const Booking = {
         status: 'pending'
       });
 
-      const waMsg = encodeURIComponent(
-        `Hi Dr. Vandita, I have booked an appointment (ID: ${res.id}) for ${res.date} at ${res.slot}.`
-      );
-
-      document.getElementById('app').innerHTML = `
-        <div class="container page-margin fade-in">
-          <div class="booking-wizard glass-card text-center" style="max-width:620px; margin:0 auto; padding:60px 40px;">
-            <div style="font-size:80px; margin-bottom:20px;">🌿</div>
-            <h2 class="dm-serif" style="font-size:32px; color:var(--primary);">Booking Confirmed!</h2>
-            <p style="font-size:17px; color:var(--text-muted); margin:16px 0 30px;">
-              Thank you, <strong>${res.patientName}</strong>! Your appointment has been scheduled.
-            </p>
-
-            <div class="summary-card" style="text-align:left;">
-              <div class="summary-item"><span class="summary-label">Appointment ID</span><span class="summary-value" style="color:var(--primary);">#${res.id}</span></div>
-              <div class="summary-item"><span class="summary-label">Date &amp; Time</span><span class="summary-value">${res.date} at ${res.slot}</span></div>
-              <div class="summary-item"><span class="summary-label">Type</span><span class="summary-value">${res.consultationType === 'video' ? '🎥 Video Consultation' : '🏥 In-Person Visit'}</span></div>
-            </div>
-
-            <div class="alert-info mt-4" style="text-align:left;">
-              <p><strong>What's Next:</strong></p>
-              <ul style="margin-top:10px; padding-left:20px; line-height:2;">
-                <li>${res.consultationType === 'video' ? 'You will receive a meeting link 15 minutes before your slot.' : 'Please arrive 10 minutes early at Padri Bazar clinic.'}</li>
-                <li>Consultation fee of ₹200 is payable ${res.consultationType === 'video' ? 'online via UPI' : 'at the clinic'}.</li>
-              </ul>
-            </div>
-
-            <div class="mt-4" style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-              <a href="https://wa.me/917005574327?text=${waMsg}" target="_blank" class="btn btn-accent">Share on WhatsApp</a>
-              <button onclick="window.print()" class="btn btn-outline">Print Receipt</button>
-            </div>
-            <div class="mt-4">
-              <a href="/" data-route="/" class="btn-text">← Back to Home</a>
-            </div>
-          </div>
-        </div>
-      `;
       toast('Appointment booked successfully! 🎉');
+      this.renderSuccess(res);
     } catch (e) {
       console.error('Booking failed:', e);
       toast('Booking failed. Please try again.', 'error');
@@ -281,6 +273,48 @@ const Booking = {
         nextBtn.disabled = false;
         nextBtn.textContent = '✓ Confirm Booking';
       }
+    } finally {
+      this.loading = false;
     }
+  },
+
+  renderSuccess(res) {
+    const waMsg = encodeURIComponent(
+      `Hi Dr. Vandita, I have booked an appointment (ID: ${res.id}) for ${res.date} at ${res.slot}.`
+    );
+
+    document.getElementById('app').innerHTML = `
+      <div class="container page-margin fade-in">
+        <div class="booking-wizard glass-card text-center" style="max-width:620px; margin:0 auto; padding:60px 40px;">
+          <div style="font-size:80px; margin-bottom:20px;">🌿</div>
+          <h2 class="dm-serif" style="font-size:32px; color:var(--primary);">Booking Confirmed!</h2>
+          <p style="font-size:17px; color:var(--text-muted); margin:16px 0 30px;">
+            Thank you, <strong>${res.patientName}</strong>! Your appointment has been scheduled.
+          </p>
+
+          <div class="summary-card" style="text-align:left;">
+            <div class="summary-item"><span class="summary-label">Appointment ID</span><span class="summary-value" style="color:var(--primary);">#${res.id}</span></div>
+            <div class="summary-item"><span class="summary-label">Date &amp; Time</span><span class="summary-value">${res.date} at ${res.slot}</span></div>
+            <div class="summary-item"><span class="summary-label">Type</span><span class="summary-value">${res.consultationType === 'video' ? '🎥 Video Consultation' : '🏥 In-Person Visit'}</span></div>
+          </div>
+
+          <div class="alert-info mt-4" style="text-align:left;">
+            <p><strong>What's Next:</strong></p>
+            <ul style="margin-top:10px; padding-left:20px; line-height:2;">
+              <li>${res.consultationType === 'video' ? 'You will receive a meeting link 15 minutes before your slot.' : 'Please arrive 10 minutes early at the clinic.'}</li>
+              <li>Consultation fee of ₹200 is payable ${res.consultationType === 'video' ? 'online via UPI' : 'at the clinic'}.</li>
+            </ul>
+          </div>
+
+          <div class="mt-4" style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+            <a href="https://wa.me/917005574327?text=${waMsg}" target="_blank" class="btn btn-accent">Share on WhatsApp</a>
+            <button onclick="window.print()" class="btn btn-outline">Print Receipt</button>
+          </div>
+          <div class="mt-4">
+            <a href="/" data-route="/" class="btn-text">← Back to Home</a>
+          </div>
+        </div>
+      </div>
+    `;
   }
 };

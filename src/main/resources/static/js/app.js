@@ -155,7 +155,7 @@ function renderHome() {
                 </div>
                 <div class="hero-visual animate-on-scroll">
                     <div class="hero-main-card">
-                        <img src="images/dr-vandita.jpg" alt="Dr. Vandita">
+                        <img src="/images/dr-vandita.jpg" alt="Dr. Vandita" onerror="this.src='https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800'">
                         <div class="floating-badge top-right animate-child">
                             <span class="icon">🏆</span>
                             <div><strong>Top Rated</strong><p>Clinic in Gorakhpur</p></div>
@@ -224,7 +224,7 @@ function renderHome() {
             <div class="container">
                 <div class="about-summary-grid">
                     <div class="about-summary-image animate-on-scroll">
-                        <img src="images/dr-vandita.jpg" alt="Dr. Vandita">
+                        <img src="/images/dr-vandita.jpg" alt="Dr. Vandita" onerror="this.src='https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800'">
                     </div>
                     <div class="about-summary-text animate-on-scroll">
                         <span class="sub-heading">About the Doctor</span>
@@ -344,7 +344,7 @@ function renderAbout() {
                     <p>Our clinic is dedicated to providing personalized care, focusing on the root cause of ailments rather than just suppressing symptoms. We use high-quality homeopathic remedies and modern diagnostic insights to ensure the best outcomes for our patients.</p>
                 </div>
                 <div class="about-summary-image">
-                     <img src="images/dr-vandita.jpg" alt="Doctor" style="border-radius: 20px;">
+                     <img src="/images/dr-vandita.jpg" alt="Doctor" style="border-radius: 20px;" onerror="this.src='https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800'">
                 </div>
             </div>
         </div>

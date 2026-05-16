@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -44,12 +45,30 @@ public class AppointmentService {
             .collect(Collectors.toList());
     }
 
-    public Appointment create(Appointment appt) {
+    public synchronized Appointment create(Appointment appt) {
+        // Double booking prevention logic (Synchronized for thread safety in-memory)
+        long currentBookings = store.appointments.stream()
+            .filter(a -> a.getDate().equals(appt.getDate()) && a.getSlot().equalsIgnoreCase(appt.getSlot()))
+            .filter(a -> !a.getStatus().equalsIgnoreCase("cancelled"))
+            .count();
+        
+        if (currentBookings >= 2) {
+            throw new IllegalStateException("This slot is already fully booked. Please select another time.");
+        }
+
+        // Check if slot is manually blocked
+        String key = appt.getDate() + "|" + appt.getSlot();
+        if (store.blockedSlots.contains(key)) {
+            throw new IllegalStateException("This slot is currently unavailable.");
+        }
+
         appt.setId(idGen.uuid());
         appt.setStatus("pending");
-        appt.setCreatedAt(LocalDate.now().toString());
+        appt.setCreatedAt(LocalDateTime.now().toString());
+        
         store.appointments.add(appt);
         patientService.upsertFromAppointment(appt);
+        
         return appt;
     }
 

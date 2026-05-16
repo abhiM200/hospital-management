@@ -39,8 +39,15 @@ public class AppointmentController {
     }
 
     @PostMapping
-    public Appointment book(@RequestBody Appointment appointment) {
-        return appointmentService.create(appointment);
+    public ResponseEntity<?> book(@RequestBody Appointment appointment) {
+        try {
+            Appointment created = appointmentService.create(appointment);
+            return ResponseEntity.ok(created);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(409).body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of("error", "Failed to book appointment. Please try again."));
+        }
     }
 
     @PutMapping("/{id}/status")
