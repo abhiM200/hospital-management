@@ -27,7 +27,8 @@ public class SlotServiceController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body(Map.of("error", "An unexpected error occurred"));
+            e.printStackTrace(); // Log the actual error to the console
+            return ResponseEntity.internalServerError().body(Map.of("error", "An unexpected error occurred: " + e.getMessage()));
         }
     }
 

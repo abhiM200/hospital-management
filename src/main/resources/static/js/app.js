@@ -87,7 +87,7 @@ function initKeepAlive() {
     if (window.keepAliveInterval) return;
     window.keepAliveInterval = setInterval(async () => {
         try {
-            await fetch('/api/health');
+            await fetch('/health');
             console.log('⚡ Keep-Alive: Ping successful');
         } catch (e) {
             console.warn('⚡ Keep-Alive: Ping failed');

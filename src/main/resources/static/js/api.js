@@ -2,18 +2,28 @@ const API = {
   base: '/api',
 
   async request(path, options = {}) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
     try {
       const res = await fetch(this.base + path, {
         ...options,
+        signal: controller.signal,
         headers: {
           'Content-Type': 'application/json',
           ...options.headers
         }
       });
+      clearTimeout(timeoutId);
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       if (res.status === 204) return null;
       return await res.json();
     } catch (e) {
+      clearTimeout(timeoutId);
+      if (e.name === 'AbortError') {
+        console.error(`API Timeout [${this.base + path}]`);
+        throw new Error('Request timed out. Please check your connection.');
+      }
       console.error(`API Error [${this.base + path}]:`, e);
       throw e;
     }

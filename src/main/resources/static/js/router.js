@@ -18,7 +18,7 @@ function getRouteHandler(path) {
   return routes['/'];
 }
 
-function navigate(path, pushState = true) {
+async function navigate(path, pushState = true) {
   if (pushState) window.history.pushState({}, '', path);
   
   const handler = getRouteHandler(path);
@@ -26,14 +26,22 @@ function navigate(path, pushState = true) {
   
   try {
     if (typeof handler === 'function') {
-      handler();
+      const result = handler();
+      if (result instanceof Promise) {
+        await result;
+      }
     } else {
       console.error('No handler found for route:', path);
       loadPage('home');
     }
   } catch (e) {
     console.error('Navigation Error:', e);
-    document.getElementById('app').innerHTML = '<div class="container"><h1>Something went wrong</h1><p>Please refresh the page.</p></div>';
+    document.getElementById('app').innerHTML = `
+      <div class="container page-margin text-center">
+        <h1 class="dm-serif">Something went wrong</h1>
+        <p class="text-muted">We encountered an error while loading this page. Please try refreshing.</p>
+        <button onclick="window.location.reload()" class="btn btn-primary mt-4">Refresh Page</button>
+      </div>`;
   }
   
   window.scrollTo(0, 0);

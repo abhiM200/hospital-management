@@ -5,7 +5,7 @@ services:
     plan: free
     branch: main
     dockerfilePath: ./Dockerfile
-    healthCheckPath: /api/health
+    healthCheckPath: /health
     envVars:
       - key: PORT
         value: 8080
