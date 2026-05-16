@@ -50,14 +50,14 @@ async function loadPage(page, slug = null) {
             break;
         case 'book':
             app.innerHTML = renderBooking();
-            if (window.Booking) window.Booking.init();
+            if (typeof Booking !== 'undefined') Booking.init();
             break;
         case 'portal':
             app.innerHTML = renderPortal();
             break;
         case 'admin':
             app.innerHTML = renderAdmin(slug);
-            if (window.Admin) window.Admin.init(slug);
+            if (typeof Admin !== 'undefined') Admin.init();
             break;
         case 'blog':
             await renderBlog(app);
@@ -67,7 +67,7 @@ async function loadPage(page, slug = null) {
             break;
         case 'ai-suite':
             app.innerHTML = renderAISuite();
-            if (window.AISuite) window.AISuite.init();
+            if (typeof AISuite !== 'undefined') AISuite.init();
             break;
         case 'contact':
             app.innerHTML = renderContact();
