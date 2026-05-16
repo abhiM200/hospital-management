@@ -120,7 +120,7 @@ async function populateHomeBlogs() {
 
 function renderHome() {
     return `
-        <!-- Hero Section Advanced -->
+        <!-- HERO -->
         <section class="hero-peerless">
             <div class="hero-background-blobs">
                 <div class="blob blob-1"></div>
@@ -129,144 +129,204 @@ function renderHome() {
             </div>
             <div class="container hero-container">
                 <div class="hero-text animate-on-scroll">
-                    <div class="hero-badge pulse">✨ Recognized Excellence since 2024</div>
+                    <div class="hero-badge pulse">🌿 Gorakhpur's Most Trusted Homeopathy Clinic</div>
                     <span class="sub-heading">Classical Homeopathy</span>
-                    <h1>Holistic Healing for <span class="gradient-text">Body & Mind</span></h1>
-                    <p>Experience safe, natural, and permanent cures for chronic diseases with Dr. Vandita's 3+ years of clinical expertise.</p>
+                    <h1>Natural Healing for<br><span class="gradient-text">Lasting Relief</span></h1>
+                    <p>Expert classical homeopathy by Dr. Vandita, B.H.M.S — treating chronic conditions at their root cause, not just suppressing symptoms.</p>
+                    <div style="display:flex;gap:20px;margin-bottom:40px;flex-wrap:wrap;">
+                        <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.85);font-size:14px;">
+                            <span style="color:#60a5fa;font-size:18px;">✓</span> 100% Natural Remedies
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.85);font-size:14px;">
+                            <span style="color:#60a5fa;font-size:18px;">✓</span> Zero Side Effects
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.85);font-size:14px;">
+                            <span style="color:#60a5fa;font-size:18px;">✓</span> Video &amp; In-Person
+                        </div>
+                    </div>
                     <div class="hero-actions">
-                        <a href="/book" data-route="/book" class="btn btn-primary">Book Appointment <span>→</span></a>
-                        <a href="/treatments" data-route="/treatments" class="btn btn-outline">Our Treatments</a>
+                        <a href="/book" data-route="/book" class="btn btn-accent" style="font-size:16px;padding:16px 32px;box-shadow:0 8px 25px rgba(237,28,36,0.4);">
+                            Book Appointment →
+                        </a>
+                        <a href="/ai-suite" data-route="/ai-suite" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);backdrop-filter:blur(10px);">
+                            ✨ AI Health Suite
+                        </a>
                     </div>
                 </div>
                 <div class="hero-visual animate-on-scroll">
-                    <div class="hero-main-card glass-card">
-                        <img src="https://images.unsplash.com/photo-1631217818242-27497080803c?w=1000&auto=format" alt="Medical Care">
+                    <div class="hero-main-card">
+                        <img src="images/dr-vandita.jpg" alt="Dr. Vandita">
                         <div class="floating-badge top-right animate-child">
                             <span class="icon">🏆</span>
-                            <div>
-                                <strong>Top Rated</strong>
-                                <p>Clinic in Gorakhpur</p>
-                            </div>
+                            <div><strong>Top Rated</strong><p>Clinic in Gorakhpur</p></div>
                         </div>
                         <div class="floating-badge bottom-left animate-child">
-                            <span class="icon">👨‍⚕️</span>
-                            <div>
-                                <strong>10k+</strong>
-                                <p>Cases Resolved</p>
-                            </div>
+                            <span class="icon">👩‍⚕️</span>
+                            <div><strong>10k+ Patients</strong><p>Healed Naturally</p></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Dynamic Process -->
-        <section class="process-section container">
-            <div class="section-title">
-                <span class="sub-heading">Our Approach</span>
-                <h2>How We <span class="gradient-text">Heal</span> You</h2>
-            </div>
-            <div class="quick-links-grid">
-                <a href="/book" data-route="/book" class="glass-card quick-link-card animate-on-scroll">
-                    <div class="card-icon">01</div>
-                    <h4>Discovery</h4>
-                    <p>In-depth consultation to understand your unique symptoms and history.</p>
-                </a>
-                <a href="/book" data-route="/book" class="glass-card quick-link-card animate-on-scroll">
-                    <div class="card-icon">02</div>
-                    <h4>Analysis</h4>
-                    <p>Expert case study using classical homeopathic principles.</p>
-                </a>
-                <a href="/portal" data-route="/portal" class="glass-card quick-link-card animate-on-scroll">
-                    <div class="card-icon">03</div>
-                    <h4>Treatment</h4>
-                    <p>Precise medication tailored to your body's specific needs.</p>
-                </a>
-                <a href="/contact" data-route="/contact" class="glass-card quick-link-card animate-on-scroll">
-                    <div class="card-icon">04</div>
-                    <h4>Recovery</h4>
-                    <p>Continuous monitoring and support for lasting wellness.</p>
-                </a>
-            </div>
-        </section>
-
-        <!-- Stats Advanced -->
+        <!-- STATS -->
         <section class="stats-peerless">
             <div class="container stats-grid">
                 <div class="stat-box animate-on-scroll">
-                    <div class="stat-number">15+</div>
-                    <p>Years of Practice</p>
+                    <div class="stat-number">3+</div><p>Years of Practice</p>
                 </div>
                 <div class="stat-box animate-on-scroll">
-                    <div class="stat-number">50k+</div>
-                    <p>Consultations</p>
+                    <div class="stat-number">10k+</div><p>Cases Resolved</p>
                 </div>
                 <div class="stat-box animate-on-scroll">
-                    <div class="stat-number">98%</div>
-                    <p>Patient Satisfaction</p>
+                    <div class="stat-number">98%</div><p>Patient Satisfaction</p>
                 </div>
                 <div class="stat-box animate-on-scroll">
-                    <div class="stat-number">24/7</div>
-                    <p>Support Access</p>
+                    <div class="stat-number">24/7</div><p>Support Access</p>
                 </div>
             </div>
         </section>
 
-        <!-- Testimonials Advanced -->
-        <section class="testimonials-advanced bg-white">
+        <!-- PROCESS -->
+        <section class="process-section">
             <div class="container">
                 <div class="section-title">
-                    <span class="sub-heading">Global Trust</span>
+                    <span class="sub-heading">Our Approach</span>
+                    <h2>How We <span class="gradient-text">Heal You</span></h2>
+                </div>
+                <div class="quick-links-grid">
+                    <a href="/book" data-route="/book" class="quick-link-card animate-on-scroll">
+                        <div class="card-icon">01</div>
+                        <h4>Discovery</h4>
+                        <p>In-depth consultation to understand your unique symptoms, history, and lifestyle.</p>
+                    </a>
+                    <a href="/about" data-route="/about" class="quick-link-card animate-on-scroll">
+                        <div class="card-icon">02</div>
+                        <h4>Analysis</h4>
+                        <p>Expert case study using classical homeopathic principles and constitutional analysis.</p>
+                    </a>
+                    <a href="/portal" data-route="/portal" class="quick-link-card animate-on-scroll">
+                        <div class="card-icon">03</div>
+                        <h4>Treatment</h4>
+                        <p>Precise remedies tailored to your body's constitution — addressing root causes.</p>
+                    </a>
+                    <a href="/contact" data-route="/contact" class="quick-link-card animate-on-scroll">
+                        <div class="card-icon">04</div>
+                        <h4>Recovery</h4>
+                        <p>Continuous monitoring, follow-ups, and digital records for lasting wellness.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT DR. VANDITA -->
+        <section style="background:#f8fafc;padding:90px 0;">
+            <div class="container">
+                <div class="about-summary-grid">
+                    <div class="about-summary-image animate-on-scroll">
+                        <img src="images/dr-vandita.jpg" alt="Dr. Vandita">
+                    </div>
+                    <div class="about-summary-text animate-on-scroll">
+                        <span class="sub-heading">About the Doctor</span>
+                        <h2 style="font-size:36px;color:#0f172a;margin-bottom:20px;">Dr. Vandita<br><span style="color:#004b91;">B.H.M.S Homeopathic Physician</span></h2>
+                        <p>With 3+ years of dedicated clinical practice in classical homeopathy, Dr. Vandita has helped thousands of patients find lasting relief from chronic conditions that conventional medicine could not resolve.</p>
+                        <p>Her approach is deeply holistic — treating the whole person rather than isolated symptoms. Every patient receives a unique, constitutional remedy after thorough case-taking.</p>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;">
+                            ${['Skin Diseases','Thyroid &amp; PCOD','Migraine','Pediatric Care','Anxiety &amp; Stress','Allergies &amp; Asthma'].map(t =>
+                                `<div style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:#334155;">
+                                    <span style="color:#004b91;font-size:18px;">✓</span> ${t}
+                                </div>`).join('')}
+                        </div>
+                        <a href="/about" data-route="/about" class="btn btn-primary">Read Full Profile →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="testimonials-advanced">
+            <div class="container">
+                <div class="section-title">
+                    <span class="sub-heading">Patient Stories</span>
                     <h2>Voices of <span class="gradient-text">Healing</span></h2>
                 </div>
                 <div class="testimonials-grid">
-                    <div class="glass-card testimonial-card animate-on-scroll">
+                    <div class="testimonial-card animate-on-scroll">
                         <div class="testimonial-header">
                             <div class="stars">⭐⭐⭐⭐⭐</div>
                             <div class="quote-icon">"</div>
                         </div>
-                        <p>The treatment for my skin allergy was revolutionary. I had tried everything for years, but Dr. Vandita's approach finally gave me relief.</p>
+                        <p>The treatment for my skin allergy was revolutionary. I had tried everything for years, but Dr. Vandita's approach finally gave me lasting relief.</p>
                         <div class="patient-profile">
                             <div class="avatar">SM</div>
-                            <div>
-                                <h5>Sangita Maity</h5>
-                                <span>Verified Patient</span>
-                            </div>
+                            <div><h5>Sangita Maity</h5><span>Verified Patient · Eczema</span></div>
                         </div>
                     </div>
-                    <div class="glass-card testimonial-card animate-on-scroll">
+                    <div class="testimonial-card animate-on-scroll">
                         <div class="testimonial-header">
                             <div class="stars">⭐⭐⭐⭐⭐</div>
                             <div class="quote-icon">"</div>
                         </div>
-                        <p>Highly professional and empathetic. The digital records and easy WhatsApp support make the whole process so seamless.</p>
+                        <p>Highly professional and empathetic. The digital records and easy WhatsApp support make the whole treatment process so seamless.</p>
                         <div class="patient-profile">
                             <div class="avatar">PN</div>
-                            <div>
-                                <h5>Pritam Nag</h5>
-                                <span>Chronic Care</span>
-                            </div>
+                            <div><h5>Pritam Nag</h5><span>Chronic Care · Thyroid</span></div>
                         </div>
                     </div>
-                    <div class="glass-card testimonial-card animate-on-scroll">
+                    <div class="testimonial-card animate-on-scroll">
                         <div class="testimonial-header">
                             <div class="stars">⭐⭐⭐⭐⭐</div>
                             <div class="quote-icon">"</div>
                         </div>
-                        <p>Homeopathy that actually works! My migraine frequency has reduced significantly in just 3 months. Truly thankful.</p>
+                        <p>Homeopathy that actually works! My migraine frequency has reduced by 80% in just 3 months. Truly life-changing treatment.</p>
                         <div class="patient-profile">
                             <div class="avatar">SS</div>
-                            <div>
-                                <h5>Sudarshan Samanta</h5>
-                                <span>Health Enthusiast</span>
-                            </div>
+                            <div><h5>Sudarshan Samanta</h5><span>Verified Patient · Migraine</span></div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOG PREVIEW -->
+        <section style="padding:90px 0;background:#fff;">
+            <div class="container">
+                <div class="section-title">
+                    <span class="sub-heading">Health Knowledge</span>
+                    <h2>Latest from our <span class="gradient-text">Health Blog</span></h2>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;" id="home-blog-grid">
+                    <div class="skeleton" style="height:320px;border-radius:20px;"></div>
+                    <div class="skeleton" style="height:320px;border-radius:20px;"></div>
+                    <div class="skeleton" style="height:320px;border-radius:20px;"></div>
+                </div>
+                <div style="text-align:center;margin-top:40px;">
+                    <a href="/blog" data-route="/blog" class="btn btn-outline">View All Articles →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA BANNER -->
+        <section style="background:linear-gradient(135deg,#003669,#004b91,#0070cc);padding:80px 0;text-align:center;color:#fff;">
+            <div class="container">
+                <h2 style="font-size:40px;color:#fff;margin-bottom:16px;">Ready to Start Your Healing Journey?</h2>
+                <p style="font-size:18px;opacity:0.85;margin-bottom:36px;max-width:600px;margin-left:auto;margin-right:auto;">Book your consultation today. In-person or video — we're here for you.</p>
+                <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                    <a href="/book" data-route="/book" class="btn btn-accent" style="font-size:16px;padding:16px 36px;box-shadow:0 8px 25px rgba(237,28,36,0.4);">
+                        Book Appointment →
+                    </a>
+                    <a href="https://wa.me/917005574327" target="_blank" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);backdrop-filter:blur(10px);font-size:16px;padding:16px 36px;">
+                        💬 Chat on WhatsApp
+                    </a>
                 </div>
             </div>
         </section>
     `;
 }
+
+
+
+
 
 function renderAbout() {
     return `
@@ -284,7 +344,7 @@ function renderAbout() {
                     <p>Our clinic is dedicated to providing personalized care, focusing on the root cause of ailments rather than just suppressing symptoms. We use high-quality homeopathic remedies and modern diagnostic insights to ensure the best outcomes for our patients.</p>
                 </div>
                 <div class="about-summary-image">
-                     <img src="https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800" alt="Doctor" style="border-radius: 20px;">
+                     <img src="images/dr-vandita.jpg" alt="Doctor" style="border-radius: 20px;">
                 </div>
             </div>
         </div>
