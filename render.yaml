@@ -15,3 +15,7 @@ services:
         value: prod
       - key: ANTHROPIC_API_KEY
         value: ""
+      - key: KEEP_ALIVE_ENABLED
+        value: "true"
+      - key: RENDER_EXTERNAL_URL
+        sync: false # User will set this in Render dashboard
