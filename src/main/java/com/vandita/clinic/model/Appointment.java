@@ -22,4 +22,5 @@ public class Appointment {
     private String status;          // pending/confirmed/completed/cancelled
     private String createdAt;
     private String email;
+    private String transactionId;
 }

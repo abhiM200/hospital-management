@@ -264,6 +264,9 @@ const Booking = {
         consultationType: this.data.type,
         status: 'pending'
       });
+      
+      // Simulate "Processing" for premium feel
+      await new Promise(r => setTimeout(r, 1500));
 
       toast('Appointment booked successfully! 🎉');
       this.renderSuccess(res);
@@ -295,6 +298,7 @@ const Booking = {
 
           <div class="summary-card" style="text-align:left;">
             <div class="summary-item"><span class="summary-label">Appointment ID</span><span class="summary-value" style="color:var(--primary);">#${res.id}</span></div>
+            <div class="summary-item"><span class="summary-label">Transaction ID</span><span class="summary-value" style="font-family:monospace; opacity:0.8;">${res.transactionId}</span></div>
             <div class="summary-item"><span class="summary-label">Date &amp; Time</span><span class="summary-value">${res.date} at ${res.slot}</span></div>
             <div class="summary-item"><span class="summary-label">Type</span><span class="summary-value">${res.consultationType === 'video' ? '🎥 Video Consultation' : '🏥 In-Person Visit'}</span></div>
           </div>

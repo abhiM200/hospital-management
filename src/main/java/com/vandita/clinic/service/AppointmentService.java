@@ -63,6 +63,7 @@ public class AppointmentService {
         }
 
         appt.setId(idGen.uuid());
+        appt.setTransactionId("TXN-" + System.currentTimeMillis() + "-" + idGen.uuid().substring(0, 8).toUpperCase());
         appt.setStatus("pending");
         appt.setCreatedAt(LocalDateTime.now().toString());
         

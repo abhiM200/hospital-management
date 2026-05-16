@@ -24,18 +24,21 @@ public class SlotService {
     public List<TimeSlot> getAvailableSlots(String date) {
         // Validate date format (YYYY-MM-DD)
         try {
-            LocalDate.parse(date);
+            LocalDate targetDate = LocalDate.parse(date);
+            if (targetDate.isBefore(LocalDate.now())) {
+                return new ArrayList<>(); // No slots for past dates
+            }
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid date format. Use YYYY-MM-DD");
         }
 
         List<TimeSlot> slots = new ArrayList<>();
         
-        // Generate slots based on clinic settings (or static rules)
-        // Morning: 09:00 AM - 01:00 PM
+        // Static Business Rules for Slots
+        // Morning: 09:00 AM - 01:00 PM (8 slots)
         generate(slots, date, "09:00", "13:00");
         
-        // Evening: 04:00 PM - 08:00 PM
+        // Evening: 04:00 PM - 08:00 PM (8 slots)
         generate(slots, date, "16:00", "20:00");
 
         return slots;
@@ -45,9 +48,10 @@ public class SlotService {
         LocalTime current = LocalTime.parse(start);
         LocalTime stop = LocalTime.parse(end);
         
-        // Use date as seed for random unavailability to keep it consistent for the same day
-        long seed = date.hashCode();
-        Random dateRandom = new Random(seed);
+        // Current time for same-day booking prevention
+        LocalDate targetDate = LocalDate.parse(date);
+        boolean isToday = targetDate.equals(LocalDate.now());
+        LocalTime now = LocalTime.now();
 
         while (current.isBefore(stop)) {
             String timeLabel = current.format(FMT);
@@ -61,15 +65,14 @@ public class SlotService {
                 .filter(a -> !a.getStatus().equalsIgnoreCase("cancelled"))
                 .count();
 
-            // Static/Random logic: Some slots are "naturally" busier (mocking real life)
-            // e.g., early morning slots are often taken
-            boolean isPseudoFull = false;
-            if (current.getHour() == 10 || current.getHour() == 11) {
-                if (dateRandom.nextInt(10) < 3) isPseudoFull = true; // 30% chance of being full
-            }
-
-            int capacity = 2; // Each slot can take 2 patients
-            boolean isAvailable = !isBlocked && !isPseudoFull && (bookedCount < capacity);
+            int capacity = 2; // Fixed capacity rule
+            
+            // Availability Rules:
+            // 1. Not manually blocked
+            // 2. Not in the past (if today)
+            // 3. Below capacity
+            boolean isInPast = isToday && current.isBefore(now.plusMinutes(30));
+            boolean isAvailable = !isBlocked && !isInPast && (bookedCount < capacity);
 
             slots.add(new TimeSlot(
                 timeLabel,
